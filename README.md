@@ -16,7 +16,7 @@ Plataforma de Cibersegurança com Inteligência Artificial desenvolvida por uma 
 
 ## 🛠️ Instalação e Execução
 ```bash
-git clone [https://github.com/teu-utilizador/CyberGuardAI.git](https://github.com/teu-utilizador/CyberGuardAI.git)
+git clone https://github.com/YannickSaiegh/CyberGuard2
 cd CyberGuardAI
 python3 -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
