@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="pt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard AI | Plataforma de Cibersegurança com IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-red: #ef233c;
+            --primary-red: #E63946;
+            --accent-orange: #FF4500;
+            --accent-red-glow: rgba(239, 35, 60, 0.5);
+            --bg-dark: #050505;
+            --card-dark: #0d0f14;
+        }
+
+        /* Custom Animations from Red Noir Reference */
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes border-spin {
+            from { --gradient-angle: 0deg; }
+            to { --gradient-angle: 360deg; }
+        }
+
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+
+        @property --gradient-angle { 
+            syntax: "<angle>"; 
+            initial-value: 0deg; 
+            inherits: false; 
+        }
+
+        .animate-fade-up {
+            animation: fade-in-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Shiny CTA Button */
+        .shiny-cta {
+            --gradient-angle: 0deg;
+            position: relative;
+            overflow: hidden;
+            border-radius: 9999px;
+            padding: 1rem 2.4rem;
+            background: linear-gradient(#050505, #050505) padding-box,
+            conic-gradient(from var(--gradient-angle), transparent 0%, #ef233c 5%, #ff4500 18%, #ef233c 32%, transparent 42%, transparent 100%) border-box;
+            border: 2px solid transparent;
+            cursor: pointer;
+            isolation: isolate;
+            animation: border-spin 2.5s linear infinite;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .shiny-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -5px rgba(239, 35, 60, 0.4);
+        }
+
+        .shiny-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, white 0.5px, transparent 0);
+            background-size: 4px 4px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        /* Parallax Stars */
+        .stars-1 {
+            box-shadow: 234px 124px #fff, 654px 345px #fff, 876px 12px #fff, 1200px 800px #fff,
+                        400px 1500px #fff, 1800px 200px #fff, 100px 1000px #fff, 900px 1900px #fff,
+                        500px 600px #fff, 1400px 100px #fff, 300px 400px #fff, 1600px 1200px #fff,
+                        720px 1120px #ef233c, 180px 580px #ef233c, 1080px 450px #fff;
+        }
+        .stars-2 {
+            box-shadow: 123px 456px #fff, 789px 234px #fff, 456px 890px #fff, 1100px 300px #fff,
+                        200px 1200px #fff, 1500px 500px #fff, 600px 1700px #fff, 1300px 900px #fff,
+                        950px 140px #ef233c, 340px 1450px #ff4500;
+        }
+
+        .gradient-blur {
+            position: fixed;
+            z-index: 40;
+            inset: 0 0 auto 0;
+            height: 110px;
+            pointer-events: none;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
+            backdrop-filter: blur(8px);
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .selection-red::selection {
+            background: #ef233c;
+            color: white;
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+            color: transparent;
+        }
+
+        /* CyberGuard Cards & Sidebar */
+        .noir-card {
+            background: linear-gradient(180deg, rgba(24, 24, 27, 0.55) 0%, rgba(5, 5, 5, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .noir-card:hover {
+            border-color: rgba(239, 35, 60, 0.45);
+            box-shadow: 0 12px 35px -10px rgba(239, 35, 60, 0.18);
+        }
+
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #a1a1aa;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .sidebar-btn.active {
+            color: #ffffff;
+            background: linear-gradient(90deg, rgba(239, 35, 60, 0.2) 0%, rgba(239, 35, 60, 0.03) 100%);
+            border-color: rgba(239, 35, 60, 0.4);
+        }
+
+        .badge-low {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+        .badge-medium {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+        }
+        .badge-high {
+            background: rgba(239, 35, 60, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 35, 60, 0.45);
+        }
+
+        /* Accessibility: Prefers Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body class="selection-red bg-black text-white font-inter overflow-x-hidden">
+    <div class="min-h-screen bg-black text-white font-inter relative overflow-x-hidden">
+        
+        <!-- Global Red Noir Background (Active across Landing & SOC App) -->
+        <div class="fixed inset-0 z-0 pointer-events-none">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#1a0505] via-[#090406] to-black"></div>
+            <div class="absolute top-0 left-0 w-[1px] h-[1px] bg-transparent stars-1 animate-[animStar_50s_linear_infinite]"></div>
+            <div class="absolute top-0 left-0 w-[2px] h-[2px] bg-transparent stars-2 animate-[animStar_80s_linear_infinite]"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-600/5 rounded-full blur-[120px]"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]"></div>
+        </div>
+
+        <!-- Top Blur Header -->
+        <div class="gradient-blur"></div>
+
+        <!-- Floating Pill Navbar (Red Noir Style) -->
+        <header class="fixed top-0 left-0 w-full z-50 pt-5 px-4">
+            <nav class="max-w-6xl mx-auto flex items-center justify-between bg-black/70 backdrop-blur-xl border border-white/10 rounded-full px-5 md:px-7 py-3 shadow-2xl">
+                <button type="button" onclick="switchMode('landing')" class="flex items-center gap-2.5 text-left group">
+                    <div class="w-5 h-5 bg-[#ef233c] rounded-sm rotate-45 flex items-center justify-center group-hover:rotate-90 transition-transform duration-300 shadow-[0_0_12px_rgba(239,35,60,0.7)]"></div>
+                    <span class="text-lg font-bold font-manrope tracking-tight">CyberGuard<span class="text-[#ef233c]">.AI</span></span>
+                </button>
+                
+                <div class="hidden lg:flex items-center gap-7">
+                    <button type="button" onclick="switchMode('landing')" id="top-nav-landing" class="text-sm font-medium text-white hover:text-[#ef233c] transition-colors">Visão Geral</button>
+                    <button type="button" onclick="openAppTool('dashboard')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Painel Principal</button>
+                    <button type="button" onclick="openAppTool('scanner')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">URL Scanner</button>
+                    <button type="button" onclick="openAppTool('phishing')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Detetor Phishing</button>
+                    <button type="button" onclick="openAppTool('password')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Passwords</button>
+                    <button type="button" onclick="openAppTool('assistant')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Assistente IA</button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <span class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span id="nav-scans-counter">4 Análises</span>
+                    </span>
+
+                    <button type="button" id="mode-toggle-btn" onclick="openAppTool('dashboard')" class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white/5 px-5 py-2 transition-transform active:scale-95">
+                        <span class="absolute inset-0 border border-white/10 rounded-full"></span>
+                        <span class="absolute inset-[-100%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,transparent_75%,#ef233c_100%)] opacity-100 transition-opacity"></span>
+                        <span class="absolute inset-[1px] rounded-full bg-black"></span>
+                        <span class="relative z-10 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-white">
+                            <span id="mode-toggle-label">Abrir Plataforma</span>
+                            <iconify-icon icon="lucide:arrow-right" class="w-3.5 h-3.5 text-[#ef233c] group-hover:translate-x-0.5 transition-transform"></iconify-icon>
+                        </span>
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- =================================================================== -->
+        <!-- VISTA 1: LANDING PAGE RED NOIR SUPERDESIGN                          -->
+        <!-- =================================================================== -->
+        <div id="landing-view" class="relative z-10">
+            <!-- Hero Section -->
+            <section class="min-h-screen flex flex-col items-center justify-center pt-32 pb-16 px-6">
+                <div class="text-center max-w-5xl mx-auto">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-fade-up" style="animation-delay: 0.1s;">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#ef233c]"></span>
+                        </span>
+                        <span class="text-xs font-medium text-red-100/90 tracking-wide font-manrope">
+                            Motor Heurístico &amp; Google Gemini AI Ativos
+                        </span>
+                        <iconify-icon icon="lucide:shield-check" class="w-3.5 h-3.5 text-red-400"></iconify-icon>
+                    </div>
+
+                    <h1 class="text-5xl sm:text-6xl md:text-8xl font-semibold tracking-tighter font-manrope leading-[1.08] mb-8 animate-fade-up" style="animation-delay: 0.2s;">
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40">A tua segurança digital</span>
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40">
+                            começa <span class="text-[#ef233c] inline-block relative">
+                                aqui.
+                                <svg class="absolute w-full h-3 -bottom-2 left-0 text-[#ef233c] opacity-70" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="2" fill="none" />
+                                </svg>
+                            </span>
+                        </span>
+                    </h1>
+
+                    <p class="text-lg md:text-2xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed animate-fade-up" style="animation-delay: 0.3s;">
+                        O CyberGuard AI combina análise heurística estrutural, cálculo matemático de entropia e Inteligência Artificial generativa para detetar URLs maliciosos e ataques de phishing em segundos.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up" style="animation-delay: 0.4s;">
+                        <button type="button" onclick="openAppTool('dashboard')" class="shiny-cta group">
+                            <span class="relative z-10 flex items-center gap-2.5 text-white font-medium">
+                                <iconify-icon icon="lucide:radar" class="text-[#ef233c] text-lg"></iconify-icon>
+                                <span>Começar análise</span>
+                                <iconify-icon icon="lucide:arrow-right" class="transition-transform group-hover:translate-x-1"></iconify-icon>
+                            </span>
+                        </button>
+                        
+                        <button type="button" onclick="openAppTool('scanner')" class="group px-8 py-4 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 font-medium hover:text-white hover:border-[#ef233c]/50 hover:bg-zinc-800/80 transition-all flex items-center gap-2.5">
+                            <iconify-icon icon="lucide:scan-line" class="w-5 h-5 text-[#ef233c]"></iconify-icon>
+                            <span>Testar URL Scanner</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stack Tecnológica Strip -->
+                <div class="w-full mt-28 border-y border-white/5 bg-white/[0.02] backdrop-blur-sm py-8 opacity-75 hover:opacity-100 transition-opacity">
+                    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center gap-6 md:gap-14">
+                        <p class="text-xs font-mono font-bold tracking-widest text-zinc-500 uppercase shrink-0">// ARQUITETURA INTEGRADA:</p>
+                        <div class="flex flex-wrap justify-center gap-8 md:gap-14 items-center w-full text-sm">
+                            <div class="flex items-center gap-2.5 font-manrope font-semibold text-zinc-200"><iconify-icon icon="lucide:terminal" class="text-[#ef233c] text-lg"></iconify-icon>Python 3 + Flask</div>
+                            <div class="flex items-center gap-2.5 font-manrope font-semibold text-zinc-200"><iconify-icon icon="lucide:sparkles" class="text-[#ef233c] text-lg"></iconify-icon>Google Gemini API</div>
+                            <div class="flex items-center gap-2.5 font-manrope font-semibold text-zinc-200"><iconify-icon icon="lucide:database" class="text-[#ef233c] text-lg"></iconify-icon>SQLite Relacional</div>
+                            <div class="flex items-center gap-2.5 font-manrope font-semibold text-zinc-200"><iconify-icon icon="lucide:shield-alert" class="text-[#ef233c] text-lg"></iconify-icon>Heurística 0–100</div>
+                            <div class="flex items-center gap-2.5 font-manrope font-semibold text-zinc-200"><iconify-icon icon="lucide:lock" class="text-[#ef233c] text-lg"></iconify-icon>Zero-Storage Passwords</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Expertise & Works Bento Grid (4 Módulos Interativos) -->
+            <section id="works" class="py-24 px-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="mb-16 text-center max-w-3xl mx-auto">
+                        <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-3">// MÓDULOS OPERACIONAIS CYBERGUARD AI</span>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-white tracking-tight font-manrope mb-5">
+                            O Sistema Operativo para a <br />
+                            <span class="text-[#ef233c]">Defesa Digital Moderna</span>
+                        </h2>
+                        <p class="text-base md:text-lg text-zinc-400 font-light">
+                            Clica em qualquer cartão abaixo para abrir e utilizar a respetiva ferramenta em tempo real.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 h-auto lg:h-[640px]">
+                        <!-- Bento 1: Analisador de URLs (Destaque 2x2) -->
+                        <div onclick="openAppTool('scanner')" class="lg:col-span-2 lg:row-span-2 group relative overflow-hidden p-8 border border-white/10 bg-gradient-to-b from-zinc-900/60 to-black hover:border-[#ef233c]/60 transition-all rounded-2xl cursor-pointer flex flex-col justify-between">
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div class="inline-flex p-3.5 rounded-xl bg-white/5 border border-white/10 text-[#ef233c]">
+                                        <iconify-icon icon="lucide:globe-lock" class="w-7 h-7"></iconify-icon>
+                                    </div>
+                                    <span class="text-xs font-mono text-zinc-400 border border-white/10 px-3 py-1 rounded-full">01 // URL SCANNER</span>
+                                </div>
+                                <h3 class="text-3xl font-semibold text-white font-manrope mb-4 tracking-tight">Analisador Heurístico de URLs</h3>
+                                <p class="text-zinc-400 text-base md:text-lg leading-relaxed mb-6">
+                                    Valida o formato de endereços web, verifica a encriptação HTTPS vs HTTP, deteta endereços IP diretos, ofuscação com <code class="text-red-300 font-mono">@</code> e palavras-chave de engenharia social. Gera uma pontuação de risco de 0 a 100 distinguindo análise heurística de Threat Intelligence.
+                                </p>
+                                <div class="grid grid-cols-3 gap-3 pt-4 border-t border-white/10 text-xs font-mono">
+                                    <div class="p-3 rounded-lg bg-black/60 border border-white/5">
+                                        <span class="text-emerald-400 block font-bold">0–29</span>
+                                        <span class="text-zinc-500">Risco Baixo</span>
+                                    </div>
+                                    <div class="p-3 rounded-lg bg-black/60 border border-white/5">
+                                        <span class="text-amber-400 block font-bold">30–59</span>
+                                        <span class="text-zinc-500">Risco Médio</span>
+                                    </div>
+                                    <div class="p-3 rounded-lg bg-black/60 border border-white/5">
+                                        <span class="text-[#ef233c] block font-bold">60–100</span>
+                                        <span class="text-zinc-500">Risco Elevado</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative z-10 mt-8 flex items-center justify-between pt-4 border-t border-white/5">
+                                <span class="text-xs font-mono uppercase tracking-wider text-[#ef233c] font-semibold">EXECUTAR ANALISADOR DE URLS</span>
+                                <iconify-icon icon="lucide:arrow-up-right" class="w-5 h-5 text-[#ef233c] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></iconify-icon>
+                            </div>
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-15 transition-opacity pointer-events-none" style="background: radial-gradient(circle at top right, #ef233c, transparent 70%);"></div>
+                        </div>
+
+                        <!-- Bento 2: Detetor de Phishing com IA (2 colunas) -->
+                        <div onclick="openAppTool('phishing')" class="lg:col-span-2 group relative overflow-hidden p-8 border border-white/10 bg-black hover:border-[#ef233c]/60 transition-all rounded-2xl cursor-pointer flex flex-col justify-between">
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="inline-flex p-3 rounded-xl bg-white/5 border border-white/10 text-[#ff4500]">
+                                        <iconify-icon icon="lucide:mail-warning" class="w-6 h-6"></iconify-icon>
+                                    </div>
+                                    <span class="text-xs font-mono text-zinc-400 border border-white/10 px-3 py-1 rounded-full">02 // GEMINI PHISHING AI</span>
+                                </div>
+                                <h3 class="text-2xl font-semibold text-white font-manrope mb-2">Detetor de Phishing com IA</h3>
+                                <p class="text-zinc-400 text-sm md:text-base">
+                                    Analisa emails, SMS e mensagens suspeitas. Identifica gatilhos de urgência, manipulação psicológica e falsificação de identidade com explicações claras geradas por IA.
+                                </p>
+                            </div>
+                            <div class="relative z-10 mt-6 flex items-center justify-between text-xs font-mono text-[#ff4500]">
+                                <span>ANALISAR MENSAGEM SUSPEITA</span>
+                                <iconify-icon icon="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></iconify-icon>
+                            </div>
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" style="background: radial-gradient(circle at top right, #ff4500, transparent 70%);"></div>
+                        </div>
+
+                        <!-- Bento 3: Segurança de Palavras-passe -->
+                        <div onclick="openAppTool('password')" class="group relative overflow-hidden p-7 border border-white/10 bg-black hover:border-emerald-500/50 transition-all rounded-2xl cursor-pointer flex flex-col justify-between">
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="inline-flex p-3 rounded-xl bg-white/5 border border-white/10 text-emerald-400">
+                                        <iconify-icon icon="lucide:key-round" class="w-6 h-6"></iconify-icon>
+                                    </div>
+                                    <span class="text-[11px] font-mono text-emerald-400">03 // ZERO-STORAGE</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-white font-manrope mb-2">Password Security</h3>
+                                <p class="text-sm text-zinc-400">Cálculo local de entropia em bits e deteção de padrões sem nunca guardar ou transmitir a password.</p>
+                            </div>
+                            <div class="relative z-10 mt-4 flex items-center justify-between text-xs font-mono text-emerald-400">
+                                <span>TESTAR FORÇA</span>
+                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </div>
+                        </div>
+
+                        <!-- Bento 4: Assistente de Cibersegurança IA -->
+                        <div onclick="openAppTool('assistant')" class="group relative overflow-hidden p-7 border border-white/10 bg-black hover:border-[#ef233c]/60 transition-all rounded-2xl cursor-pointer flex flex-col justify-between">
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="inline-flex p-3 rounded-xl bg-white/5 border border-white/10 text-[#ef233c]">
+                                        <iconify-icon icon="lucide:bot" class="w-6 h-6"></iconify-icon>
+                                    </div>
+                                    <span class="text-[11px] font-mono text-[#ef233c]">04 // DEFENSIVO</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-white font-manrope mb-2">Assistente IA</h3>
+                                <p class="text-sm text-zinc-400">Esclarece ataques comuns, SQL Injection, Ransomware e recomendações defensivas em português.</p>
+                            </div>
+                            <div class="relative z-10 mt-4 flex items-center justify-between text-xs font-mono text-[#ef233c]">
+                                <span>ABRIR CHAT IA</span>
+                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Red Noir Security Banner -->
+            <div class="w-full bg-[#ef233c] py-16 px-6">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/15 text-black font-mono text-xs uppercase font-bold mb-5">
+                        <iconify-icon icon="lucide:shield-alert"></iconify-icon>
+                        <span>Compromisso de Cibersegurança Ética &amp; Rigor Técnico</span>
+                    </div>
+                    <h3 class="text-2xl md:text-4xl font-bold text-black font-manrope leading-tight mb-8">
+                        "Nunca executamos URLs submetidos, nunca guardamos palavras-passe e distinguimos com rigor uma análise heurística de uma ameaça confirmada."
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+                        <div class="bg-black/10 p-4 rounded-xl border border-black/15">
+                            <div class="text-black font-bold text-sm font-manrope">Elemento 1</div>
+                            <div class="text-black/80 text-xs">Backend Flask &amp; REST API</div>
+                        </div>
+                        <div class="bg-black/10 p-4 rounded-xl border border-black/15">
+                            <div class="text-black font-bold text-sm font-manrope">Elemento 2</div>
+                            <div class="text-black/80 text-xs">Frontend Red Noir UI/UX</div>
+                        </div>
+                        <div class="bg-black/10 p-4 rounded-xl border border-black/15">
+                            <div class="text-black font-bold text-sm font-manrope">Elemento 3</div>
+                            <div class="text-black/80 text-xs">Integração Gemini IA &amp; Motores</div>
+                        </div>
+                        <div class="bg-black/10 p-4 rounded-xl border border-black/15">
+                            <div class="text-black font-bold text-sm font-manrope">Elemento 4</div>
+                            <div class="text-black/80 text-xs">Base de Dados SQLite &amp; Testes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Interactive URL Scanner right on Landing Page -->
+            <section class="py-24 px-6 text-center bg-zinc-950/60 border-t border-white/5">
+                <div class="max-w-3xl mx-auto">
+                    <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-3">// TESTE RÁPIDO IMEDIATO</span>
+                    <h2 class="text-4xl md:text-6xl font-bold font-manrope mb-5 tracking-tighter">Pronto para <span class="text-[#ef233c]">Analisar?</span></h2>
+                    <p class="text-base md:text-lg text-zinc-400 mb-10">Introduz um endereço URL abaixo para o analisares imediatamente no motor heurístico do CyberGuard AI.</p>
+                    
+                    <form id="landing-quick-scan-form" class="max-w-xl mx-auto flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="landing-quick-url" placeholder="Ex: http://192.168.1.50/login-bank-verify" required
+                               class="flex-1 bg-white/5 border border-white/15 rounded-full px-6 py-4 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c] transition-all">
+                        <button type="submit" class="bg-[#ef233c] hover:bg-red-700 text-white font-bold rounded-full px-8 py-4 text-sm transition-all shrink-0">
+                            Analisar Agora
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Footer Red Noir -->
+            <footer class="bg-black border-t border-zinc-900 pt-16 pb-10 relative overflow-hidden">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 mb-16 relative z-10">
+                    <div class="md:col-span-2">
+                        <div class="flex items-center gap-2.5 mb-4">
+                            <div class="w-5 h-5 bg-[#ef233c] rounded-sm rotate-45"></div>
+                            <span class="text-2xl font-bold font-manrope tracking-tight">CyberGuard.AI</span>
+                        </div>
+                        <p class="text-zinc-500 max-w-sm text-sm leading-relaxed">
+                            Plataforma de Cibersegurança com Inteligência Artificial desenvolvida para o Curso Profissional de Técnico de Desenvolvimento de Software.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xs font-bold text-[#ef233c] uppercase tracking-widest mb-4">Ferramentas</h4>
+                        <ul class="space-y-3 text-zinc-400 text-sm">
+                            <li><button type="button" onclick="openAppTool('dashboard')" class="hover:text-white transition-colors">Painel Principal</button></li>
+                            <li><button type="button" onclick="openAppTool('scanner')" class="hover:text-white transition-colors">Analisador de URLs</button></li>
+                            <li><button type="button" onclick="openAppTool('phishing')" class="hover:text-white transition-colors">Detetor de Phishing</button></li>
+                            <li><button type="button" onclick="openAppTool('password')" class="hover:text-white transition-colors">Segurança de Passwords</button></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xs font-bold text-[#ef233c] uppercase tracking-widest mb-4">Sistema</h4>
+                        <ul class="space-y-3 text-zinc-400 text-sm">
+                            <li><button type="button" onclick="openAppTool('history')" class="hover:text-white transition-colors">Histórico SQLite</button></li>
+                            <li><button type="button" onclick="openAppTool('assistant')" class="hover:text-white transition-colors">Assistente Gemini IA</button></li>
+                            <li><button type="button" onclick="openAppTool('settings')" class="hover:text-white transition-colors">Definições &amp; Equipa</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Huge Footer Watermark Text -->
+                <div class="flex justify-center items-center py-6 opacity-25 pointer-events-none">
+                    <h1 class="text-[13vw] leading-none font-bold font-manrope tracking-tighter text-stroke select-none">CYBERGUARD</h1>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-6 border-t border-zinc-900 pt-8 flex flex-col md:flex-row items-center justify-between text-zinc-600 text-[11px] font-mono uppercase tracking-widest">
+                    <p>&copy; 2026 CyberGuard AI — Projeto de 4 Alunos (Técnico de Desenvolvimento de Software).</p>
+                    <div class="flex gap-6 mt-4 md:mt-0">
+                        <span>Python + Flask</span>
+                        <span>SQLite</span>
+                        <span class="text-[#ef233c]">Google Gemini AI</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- VISTA 2: APLICAÇÃO OPERACIONAL COMPLETA (SOC DASHBOARD & TOOLS)     -->
+        <!-- =================================================================== -->
+        <div id="app-view" class="hidden relative z-10 pt-24 pb-16 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-8">
+                
+                <!-- Barra Lateral de Navegação (7 Secções Obrigatórias) -->
+                <aside class="lg:w-64 shrink-0">
+                    <div class="noir-card p-4 sticky top-28 space-y-6">
+                        <div class="px-2 pt-1 flex items-center justify-between border-b border-white/10 pb-3">
+                            <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">Consola Operacional</span>
+                            <span class="w-2 h-2 rounded-full bg-[#ef233c]"></span>
+                        </div>
+
+                        <nav class="space-y-1.5" aria-label="Navegação Principal CyberGuard">
+                            <button type="button" onclick="openAppTool('dashboard')" data-nav="dashboard" class="sidebar-btn active">
+                                <iconify-icon icon="lucide:layout-dashboard" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Painel Principal</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('scanner')" data-nav="scanner" class="sidebar-btn">
+                                <iconify-icon icon="lucide:scan-line" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Analisador de URLs</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('phishing')" data-nav="phishing" class="sidebar-btn">
+                                <iconify-icon icon="lucide:mail-warning" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Detetor de Phishing</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('password')" data-nav="password" class="sidebar-btn">
+                                <iconify-icon icon="lucide:key-round" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Segurança Passwords</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('history')" data-nav="history" class="sidebar-btn">
+                                <iconify-icon icon="lucide:history" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Histórico de Análises</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('assistant')" data-nav="assistant" class="sidebar-btn">
+                                <iconify-icon icon="lucide:bot" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Assistente de IA</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('settings')" data-nav="settings" class="sidebar-btn">
+                                <iconify-icon icon="lucide:settings" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Definições</span>
+                            </button>
+                        </nav>
+
+                        <div class="pt-4 border-t border-white/10 space-y-3">
+                            <button type="button" onclick="switchMode('landing')" class="w-full py-2.5 px-3 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-mono text-zinc-300 flex items-center justify-between transition-colors">
+                                <span>Voltar à Landing Page</span>
+                                <iconify-icon icon="lucide:home"></iconify-icon>
+                            </button>
+                            <div class="flex items-center justify-between text-[11px] font-mono text-zinc-500 px-1">
+                                <span>SQLite Engine</span>
+                                <span class="text-emerald-400">ONLINE</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Área Principal de Conteúdo Dinâmico -->
+                <main class="flex-1 min-w-0">
+                    
+                    <!-- SECÇÃO 1: PAINEL PRINCIPAL (DASHBOARD) -->
+                    <section id="tab-dashboard" class="app-section space-y-8">
+                        <div class="noir-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// VISÃO GERAL DE SEGURANÇA</span>
+                                <h1 class="text-2xl md:text-4xl font-bold font-manrope">Bem-vindo ao Painel CyberGuard AI</h1>
+                                <p class="text-zinc-400 text-sm mt-1">
+                                    Estatísticas calculadas em tempo real com base nos registos reais de análises de URLs e Phishing.
+                                </p>
+                            </div>
+                            <div class="flex flex-wrap gap-3 shrink-0">
+                                <button type="button" onclick="openAppTool('scanner')" class="px-4 py-2.5 rounded-full bg-[#ef233c] hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2">
+                                    <iconify-icon icon="lucide:plus"></iconify-icon>
+                                    <span>Analisar URL</span>
+                                </button>
+                                <button type="button" onclick="openAppTool('phishing')" class="px-4 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-bold uppercase tracking-wider transition-all">
+                                    Testar Phishing
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 4 Cartões de Métricas Reais -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="noir-card p-5">
+                                <div class="flex items-center justify-between text-xs font-mono uppercase text-zinc-400 mb-2">
+                                    <span>Total de Análises</span>
+                                    <iconify-icon icon="lucide:activity" class="text-[#ef233c] text-lg"></iconify-icon>
+                                </div>
+                                <div id="stat-total" class="text-3xl font-bold font-mono">0</div>
+                                <p id="stat-breakdown-type" class="text-xs text-zinc-500 mt-1">URLs: 0 | Phishing: 0</p>
+                            </div>
+
+                            <div class="noir-card p-5">
+                                <div class="flex items-center justify-between text-xs font-mono uppercase text-zinc-400 mb-2">
+                                    <span>Ameaças Detetadas</span>
+                                    <iconify-icon icon="lucide:shield-alert" class="text-[#ef233c] text-lg"></iconify-icon>
+                                </div>
+                                <div id="stat-threats" class="text-3xl font-bold font-mono text-[#ef233c]">0</div>
+                                <p class="text-xs text-zinc-500 mt-1">Risco Elevado + Risco Médio</p>
+                            </div>
+
+                            <div class="noir-card p-5">
+                                <div class="flex items-center justify-between text-xs font-mono uppercase text-zinc-400 mb-2">
+                                    <span>Risco Elevado</span>
+                                    <iconify-icon icon="lucide:flame" class="text-[#ff4500] text-lg"></iconify-icon>
+                                </div>
+                                <div id="stat-high" class="text-3xl font-bold font-mono text-[#ff4500]">0</div>
+                                <p id="stat-med-low" class="text-xs text-zinc-500 mt-1">Médio: 0 | Baixo: 0</p>
+                            </div>
+
+                            <div class="noir-card p-5">
+                                <div class="flex items-center justify-between text-xs font-mono uppercase text-zinc-400 mb-2">
+                                    <span>Pontuação Média</span>
+                                    <iconify-icon icon="lucide:gauge" class="text-emerald-400 text-lg"></iconify-icon>
+                                </div>
+                                <div id="stat-avg" class="text-3xl font-bold font-mono">0<span class="text-sm text-zinc-500">/100</span></div>
+                                <p class="text-xs text-zinc-500 mt-1">Índice global de risco</p>
+                            </div>
+                        </div>
+
+                        <!-- Gráficos Reais Chart.js -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="noir-card p-6">
+                                <h2 class="text-base font-semibold font-manrope">Distribuição por Classificação de Risco</h2>
+                                <p class="text-xs text-zinc-400 mb-4">Contagem real: Risco Baixo, Médio e Elevado</p>
+                                <div class="h-60">
+                                    <canvas id="chartRiskDistribution"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="noir-card p-6">
+                                <h2 class="text-base font-semibold font-manrope">Análises por Módulo de Segurança</h2>
+                                <p class="text-xs text-zinc-400 mb-4">Comparação entre URL Scanner e Phishing Detector</p>
+                                <div class="h-60">
+                                    <canvas id="chartModuleVolume"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Atividade Recente -->
+                        <div class="noir-card p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h2 class="text-base font-semibold font-manrope">Atividade Recente na Base de Dados</h2>
+                                    <p class="text-xs text-zinc-400">Últimos registos gravados (clica em Detalhes para inspecionar)</p>
+                                </div>
+                                <button type="button" onclick="openAppTool('history')" class="text-xs font-mono text-[#ef233c] hover:underline">
+                                    Ver Histórico Completo &rarr;
+                                </button>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr class="border-b border-white/10 text-xs font-mono uppercase text-zinc-400">
+                                            <th class="py-3 px-3">Tipo</th>
+                                            <th class="py-3 px-3">Alvo Analisado</th>
+                                            <th class="py-3 px-3">Risco</th>
+                                            <th class="py-3 px-3">Classificação</th>
+                                            <th class="py-3 px-3 text-right">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashboard-recent-tbody" class="divide-y divide-white/5"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 2: ANALISADOR DE URLS -->
+                    <section id="tab-scanner" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8">
+                            <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// MÓDULO A — services/url_scanner.py</span>
+                            <h2 class="text-2xl md:text-3xl font-bold font-manrope">Analisador Heurístico de URLs</h2>
+                            <p class="text-zinc-400 text-sm mt-1">
+                                Inspeção passiva lexical e estrutural: verifica protocolo HTTP/HTTPS, uso de endereços IP, ofuscação, subdomínios e palavras-chave suspeitas.
+                            </p>
+
+                            <form id="url-scanner-form" class="mt-6 space-y-4">
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <input type="text" id="scanner-url-input" required
+                                           placeholder="Ex: http://192.168.10.45/login-secure-update/verify@bank.com"
+                                           class="flex-1 bg-black border border-white/15 rounded-xl px-4 py-3.5 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                    <button type="submit" class="px-7 py-3.5 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shrink-0">
+                                        <iconify-icon icon="lucide:radar"></iconify-icon>
+                                        <span>Analisar URL</span>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
+                                    <span class="text-zinc-500 font-mono">Exemplos de teste:</span>
+                                    <button type="button" onclick="fillUrlSample('https://www.portugal.gov.pt/pt/gc23')" class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-emerald-300 border border-emerald-500/20">
+                                        Gov.pt (Risco Baixo)
+                                    </button>
+                                    <button type="button" onclick="fillUrlSample('http://atualizar-dados-cliente-seguro.xyz/login/confirm')" class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-amber-300 border border-amber-500/20">
+                                        HTTP + Domínio .xyz (Risco Médio/Elevado)
+                                    </button>
+                                    <button type="button" onclick="fillUrlSample('http://185.220.101.45/secure-bank-login/verify.php?session=admin@portal.pt')" class="px-3 py-1 rounded-full bg-[#ef233c]/15 hover:bg-[#ef233c]/25 text-red-300 border border-[#ef233c]/30">
+                                        IP Direto + @ + HTTP (Risco Elevado)
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Resultado do URL Scanner -->
+                        <div id="scanner-result-card" class="noir-card p-6 md:p-8 hidden space-y-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5">
+                                <div>
+                                    <span class="text-xs font-mono uppercase text-zinc-400">Relatório Técnico do Endereço</span>
+                                    <h3 id="res-url-target" class="text-base md:text-lg font-mono text-white break-all mt-1"></h3>
+                                    <p id="res-url-summary" class="text-sm text-zinc-300 mt-1"></p>
+                                </div>
+                                <div class="text-left md:text-right shrink-0">
+                                    <div id="res-url-score" class="text-4xl font-bold font-mono">0/100</div>
+                                    <span id="res-url-badge" class="inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium"></span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono">
+                                <div class="p-4 rounded-xl bg-black border border-white/10">
+                                    <span class="text-zinc-500 block">DOMÍNIO EXTRAÍDO</span>
+                                    <span id="res-url-domain" class="text-white text-sm font-semibold mt-1 block truncate"></span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-black border border-white/10">
+                                    <span class="text-zinc-500 block">PROTOCOLO</span>
+                                    <span id="res-url-protocol" class="text-white text-sm font-semibold mt-1 block"></span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-black border border-white/10">
+                                    <span class="text-zinc-500 block">MODO DE INSPEÇÃO</span>
+                                    <span class="text-[#ef233c] text-sm font-semibold mt-1 block">Heurística Lexical Passiva</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-xs font-mono uppercase text-zinc-400 mb-3">Indicadores Estruturais Detetados</h4>
+                                <ul id="res-url-indicators" class="space-y-2 text-sm text-zinc-200"></ul>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-xs text-zinc-400 leading-relaxed">
+                                <strong class="text-white">Distinção Técnica Obrigatória:</strong> Esta avaliação resulta de uma <strong>análise heurística estrutural</strong> realizada localmente pelo CyberGuard AI. Não garante que o website é 100% seguro ou malicioso sem validação adicional em feeds externos de <em>Threat Intelligence</em>.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 3: DETETOR DE PHISHING COM IA -->
+                    <section id="tab-phishing" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8">
+                            <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// MÓDULO B — services/phishing_detector.py + Gemini AI</span>
+                            <h2 class="text-2xl md:text-3xl font-bold font-manrope">Detetor de Phishing com Inteligência Artificial</h2>
+                            <p class="text-zinc-400 text-sm mt-1">
+                                Analisa emails, SMS e mensagens para detetar manipulação psicológica, urgência artificial, links falsos e roubo de credenciais.
+                            </p>
+
+                            <form id="phishing-form" class="mt-6 space-y-4">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <label for="phishing-type" class="text-xs font-mono uppercase text-zinc-400">Canal:</label>
+                                        <select id="phishing-type" class="bg-black border border-white/15 rounded-xl px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                            <option value="Mensagem SMS">Mensagem SMS</option>
+                                            <option value="Email">Email</option>
+                                            <option value="Mensagem WhatsApp">Mensagem WhatsApp</option>
+                                            <option value="Texto de Website">Texto de Website</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="flex flex-wrap gap-2 text-xs">
+                                        <button type="button" onclick="loadPhishingSample('sms_bank')" class="px-3 py-1 rounded-full bg-[#ef233c]/15 text-red-300 border border-[#ef233c]/30 hover:bg-[#ef233c]/25">
+                                            Exemplo 1: SMS Banco Fraudulento
+                                        </button>
+                                        <button type="button" onclick="loadPhishingSample('email_customs')" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25">
+                                            Exemplo 2: Aviso Encomenda
+                                        </button>
+                                        <button type="button" onclick="loadPhishingSample('legit_school')" class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25">
+                                            Exemplo 3: Mensagem Legítima
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <textarea id="phishing-textarea" rows="5" required
+                                          placeholder="Cola aqui o texto do email, SMS ou mensagem suspeita para análise..."
+                                          class="w-full bg-black border border-white/15 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-[#ef233c]"></textarea>
+
+                                <button type="submit" class="px-7 py-3.5 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-sm transition-all flex items-center gap-2">
+                                    <iconify-icon icon="lucide:sparkles"></iconify-icon>
+                                    <span>Executar Análise com IA Gemini</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Resultado Phishing -->
+                        <div id="phishing-result-card" class="noir-card p-6 md:p-8 hidden space-y-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5">
+                                <div>
+                                    <span class="text-xs font-mono uppercase text-zinc-400">Diagnóstico Semântico &amp; Heurístico</span>
+                                    <h3 id="res-phish-summary" class="text-lg font-bold font-manrope text-white mt-1"></h3>
+                                </div>
+                                <div class="text-left md:text-right shrink-0">
+                                    <div id="res-phish-score" class="text-4xl font-bold font-mono">0/100</div>
+                                    <span id="res-phish-badge" class="inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium"></span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-xs font-mono uppercase text-zinc-400 mb-3">Padrões de Engenharia Social Identificados</h4>
+                                <ul id="res-phish-indicators" class="space-y-2 text-sm text-zinc-200"></ul>
+                            </div>
+
+                            <div class="p-5 rounded-2xl bg-black border border-[#ef233c]/40">
+                                <div class="flex items-center gap-2 text-xs font-mono uppercase text-[#ef233c] mb-2">
+                                    <iconify-icon icon="lucide:bot" class="text-base"></iconify-icon>
+                                    <span>Explicação Inteligente (Google Gemini AI)</span>
+                                </div>
+                                <p id="res-phish-explanation" class="text-sm text-zinc-200 leading-relaxed whitespace-pre-line"></p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 4: VERIFICADOR DE SEGURANÇA DE PALAVRAS-PASSE -->
+                    <section id="tab-password" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8 space-y-6">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5">
+                                <div>
+                                    <span class="text-xs font-mono uppercase tracking-widest text-emerald-400 block mb-1">// MÓDULO C — ZERO-STORAGE ENCRYPTION CHECK</span>
+                                    <h2 class="text-2xl md:text-3xl font-bold font-manrope">Verificador de Segurança de Palavras-passe</h2>
+                                    <p class="text-zinc-400 text-sm mt-1">
+                                        Avalia comprimento, entropia matemática em bits e padrões vulneráveis. <strong>Nunca guarda nem envia passwords para a BD ou IA.</strong>
+                                    </p>
+                                </div>
+                                <button type="button" onclick="generateSecurePassword()" class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono text-white shrink-0 flex items-center gap-2">
+                                    <iconify-icon icon="lucide:wand-2" class="text-[#ef233c]"></iconify-icon>
+                                    <span>Gerar Password Forte</span>
+                                </button>
+                            </div>
+
+                            <div class="space-y-4">
+                                <label for="pwd-live-input" class="block text-xs font-mono uppercase text-zinc-400">Digita ou testa uma palavra-passe</label>
+                                <div class="relative">
+                                    <input type="password" id="pwd-live-input" autocomplete="off"
+                                           placeholder="Escreve aqui para calcular a entropia em tempo real..."
+                                           class="w-full bg-black border border-white/15 rounded-xl px-4 py-4 pr-12 text-base font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                    <button type="button" id="pwd-toggle-visibility" class="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white">
+                                        <iconify-icon icon="lucide:eye" class="text-xl"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Indicadores em Tempo Real -->
+                            <div class="space-y-5 pt-2">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-xs font-mono text-zinc-400 uppercase">Nível de Segurança</span>
+                                        <h3 id="pwd-label" class="text-2xl font-bold font-manrope text-zinc-400">A aguardar introdução...</h3>
+                                    </div>
+                                    <div class="text-right font-mono">
+                                        <span id="pwd-score" class="text-3xl font-bold">0</span><span class="text-zinc-500">/100</span>
+                                        <span id="pwd-entropy" class="block text-xs text-zinc-400">0.0 bits de entropia</span>
+                                    </div>
+                                </div>
+
+                                <div class="w-full h-3 bg-black rounded-full overflow-hidden border border-white/10">
+                                    <div id="pwd-bar" class="h-full bg-[#ef233c] transition-all duration-300" style="width: 0%;"></div>
+                                </div>
+
+                                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs font-mono">
+                                    <div id="pwd-crit-len" class="p-3 rounded-xl bg-black border border-white/10 text-zinc-500">Comprimento: 0</div>
+                                    <div id="pwd-crit-low" class="p-3 rounded-xl bg-black border border-white/10 text-zinc-500">Minúsculas (a-z)</div>
+                                    <div id="pwd-crit-up" class="p-3 rounded-xl bg-black border border-white/10 text-zinc-500">Maiúsculas (A-Z)</div>
+                                    <div id="pwd-crit-num" class="p-3 rounded-xl bg-black border border-white/10 text-zinc-500">Números (0-9)</div>
+                                    <div id="pwd-crit-sym" class="p-3 rounded-xl bg-black border border-white/10 text-zinc-500">Símbolos (!@#)</div>
+                                </div>
+
+                                <div>
+                                    <h4 class="text-xs font-mono uppercase text-zinc-400 mb-2">Sugestões para Melhorar</h4>
+                                    <ul id="pwd-suggestions" class="space-y-2 text-sm text-zinc-300">
+                                        <li class="bg-black p-3 rounded-xl border border-white/5">• Introduz uma palavra-passe acima para veres recomendações personalizadas.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 5: HISTÓRICO DE ANÁLISES -->
+                    <section id="tab-history" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5 mb-6">
+                                <div>
+                                    <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// TABELA SQLITE: scan_history</span>
+                                    <h2 class="text-2xl md:text-3xl font-bold font-manrope">Histórico Completo de Análises</h2>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <select id="history-filter-type" onchange="renderHistoryTable()" class="bg-black border border-white/15 rounded-xl px-3 py-2 text-xs font-mono text-white">
+                                        <option value="ALL">Todos os Tipos</option>
+                                        <option value="URL">Apenas URL</option>
+                                        <option value="PHISHING">Apenas Phishing</option>
+                                    </select>
+                                    <select id="history-filter-risk" onchange="renderHistoryTable()" class="bg-black border border-white/15 rounded-xl px-3 py-2 text-xs font-mono text-white">
+                                        <option value="ALL">Todos os Riscos</option>
+                                        <option value="Risco Elevado">Risco Elevado</option>
+                                        <option value="Risco Médio">Risco Médio</option>
+                                        <option value="Risco Baixo">Risco Baixo</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr class="border-b border-white/10 text-xs font-mono uppercase text-zinc-400">
+                                            <th class="py-3 px-3">#ID</th>
+                                            <th class="py-3 px-3">Tipo</th>
+                                            <th class="py-3 px-3">Alvo / Excerto</th>
+                                            <th class="py-3 px-3">Pontuação</th>
+                                            <th class="py-3 px-3">Classificação</th>
+                                            <th class="py-3 px-3">Data/Hora</th>
+                                            <th class="py-3 px-3 text-right">Relatório</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="full-history-tbody" class="divide-y divide-white/5"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 6: ASSISTENTE DE CIBERSEGURANÇA COM IA -->
+                    <section id="tab-assistant" class="app-section hidden space-y-4">
+                        <div class="noir-card p-6 flex flex-col h-[620px]">
+                            <div class="border-b border-white/10 pb-4 mb-4 flex items-center justify-between">
+                                <div>
+                                    <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block">// MÓDULO D — EDUCAÇÃO DEFENSIVA GEMINI AI</span>
+                                    <h2 class="text-xl md:text-2xl font-bold font-manrope">Assistente de Cibersegurança Ética</h2>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-xs font-mono badge-low">Modo Defensivo Ativo</span>
+                            </div>
+
+                            <!-- Tópicos Rápidos -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <button type="button" onclick="askAssistantTopic('O que é Ransomware e como proteger uma rede escolar ou empresarial?')" class="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-[#ef233c]/20 border border-white/10 text-zinc-300 transition-colors">
+                                    O que é Ransomware?
+                                </button>
+                                <button type="button" onclick="askAssistantTopic('Explica SQL Injection e como o CyberGuard AI o previne no SQLite.')" class="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-[#ef233c]/20 border border-white/10 text-zinc-300 transition-colors">
+                                    Como prevenir SQL Injection?
+                                </button>
+                                <button type="button" onclick="askAssistantTopic('Como identificar um ataque de Spear Phishing e falsificação de domínio?')" class="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-[#ef233c]/20 border border-white/10 text-zinc-300 transition-colors">
+                                    Identificar Spear Phishing
+                                </button>
+                                <button type="button" onclick="askAssistantTopic('Qual a diferença entre análise heurística de URLs e Threat Intelligence?')" class="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-[#ef233c]/20 border border-white/10 text-zinc-300 transition-colors">
+                                    Heurística vs Threat Intelligence
+                                </button>
+                            </div>
+
+                            <!-- Mensagens do Chat -->
+                            <div id="assistant-chat-box" class="flex-1 overflow-y-auto space-y-4 pr-2 mb-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-[#ef233c] flex items-center justify-center shrink-0 mt-0.5">
+                                        <iconify-icon icon="lucide:bot" class="text-white"></iconify-icon>
+                                    </div>
+                                    <div class="bg-black border border-white/10 rounded-2xl p-4 text-sm text-zinc-200 max-w-2xl leading-relaxed">
+                                        Olá! Sou o Assistente de Cibersegurança do <strong>CyberGuard AI</strong>. Estou configurado para educação defensiva: posso explicar ataques informáticos, vulnerabilidades web (OWASP), proteção de credenciais ou ajudar-te a interpretar alertas. Qual é a tua dúvida?
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Input Chat -->
+                            <form id="assistant-chat-form" class="flex gap-3 pt-2 border-t border-white/10">
+                                <input type="text" id="assistant-user-input" required
+                                       placeholder="Faz uma pergunta sobre cibersegurança defensiva..."
+                                       class="flex-1 bg-black border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ef233c]">
+                                <button type="submit" class="px-6 py-3 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-sm transition-all flex items-center gap-2">
+                                    <span>Enviar</span>
+                                    <iconify-icon icon="lucide:send"></iconify-icon>
+                                </button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 7: DEFINIÇÕES & ORGANIZAÇÃO DA EQUIPA -->
+                    <section id="tab-settings" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8 space-y-6">
+                            <div class="border-b border-white/10 pb-5">
+                                <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// CONFIGURAÇÃO DO SISTEMA &amp; EQUIPA</span>
+                                <h2 class="text-2xl md:text-3xl font-bold font-manrope">Definições do CyberGuard AI</h2>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-4 rounded-xl bg-black border border-white/10 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-xs font-mono text-zinc-400 block">MOTOR DE BASE DE DADOS</span>
+                                        <span class="text-sm font-semibold text-white">SQLite Local + Consultas Parametrizadas</span>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-xs badge-low">Protegido</span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-black border border-white/10 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-xs font-mono text-zinc-400 block">SERVIÇO DE IA (.env)</span>
+                                        <span class="text-sm font-semibold text-white">Google Gemini 2.5 Flash (Backend-Only)</span>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-xs badge-low">Ativo</span>
+                                </div>
+                            </div>
+
+                            <div class="p-5 rounded-xl bg-black border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div>
+                                    <h3 class="font-semibold text-white text-sm">Gestão de Registos da Base de Dados</h3>
+                                    <p class="text-xs text-zinc-400 mt-1">Podes repor os dados de demonstração ou limpar todo o histórico de análises.</p>
+                                </div>
+                                <div class="flex gap-3 shrink-0">
+                                    <button type="button" onclick="resetDemoDatabase()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono text-zinc-200">
+                                        Repor Dados Iniciais
+                                    </button>
+                                    <button type="button" onclick="clearAllDatabase()" class="px-4 py-2 rounded-xl border border-[#ef233c] text-[#ef233c] hover:bg-[#ef233c] hover:text-white text-xs font-mono transition-colors">
+                                        Limpar Histórico
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="settings-toast" class="hidden p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-xs text-emerald-300 font-mono"></div>
+                        </div>
+                    </section>
+
+                </main>
+            </div>
+        </div>
+
+        <!-- Modal de Inspeção de Detalhes do Histórico -->
+        <div id="scan-detail-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="noir-card max-w-2xl w-full p-6 md:p-8 space-y-4 border border-white/15">
+                <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                    <h3 id="modal-scan-title" class="text-lg font-bold font-manrope">Relatório Detalhado da Análise</h3>
+                    <button type="button" onclick="closeDetailModal()" class="text-zinc-400 hover:text-white">
+                        <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+                    </button>
+                </div>
+                <div id="modal-scan-content" class="space-y-4 text-sm text-zinc-300"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // =========================================================================
+        // 1. BASE DE DADOS REAL EM MEMÓRIA / LOCALSTORAGE (ESPELHO DO SQLITE)
+        // =========================================================================
+        const INITIAL_SCANS = [
+            {
+                id: 1,
+                scan_type: "URL",
+                target_preview: "https://www.portugal.gov.pt/pt/gc23",
+                risk_score: 5,
+                classification: "Risco Baixo",
+                summary: "Estrutura do URL limpa, domínio governamental oficial e HTTPS ativo.",
+                created_at: "2026-03-29 10:15",
+                indicators: [
+                    "Utiliza protocolo HTTPS encriptado.",
+                    "Domínio governamental (.gov.pt) sem padrões de ofuscação."
+                ],
+                explanation: "Análise heurística estrutural: não foram detetados sinais suspeitos no formato do endereço."
+            },
+            {
+                id: 2,
+                scan_type: "PHISHING",
+                target_preview: "AVISO URGENTE: A sua conta bancária foi suspensa. Valide em http://verifica-cliente.xyz/login",
+                risk_score: 88,
+                classification: "Risco Elevado",
+                summary: "Tentativa crítica de phishing bancário com urgência artificial e link HTTP suspeito.",
+                created_at: "2026-03-29 11:04",
+                indicators: [
+                    "Gatilho psicológico de ameaça e urgência ('URGENTE', 'conta suspensa').",
+                    "Link externo não encriptado (HTTP) com TLD de baixo custo (.xyz).",
+                    "Pedido direto de validação de credenciais bancárias."
+                ],
+                explanation: "A IA Gemini identificou engenharia social clássica: a mensagem cria pânico imediato para forçar a vítima a clicar num endereço falso que imita uma instituição bancária."
+            },
+            {
+                id: 3,
+                scan_type: "URL",
+                target_preview: "http://185.220.101.45/secure-login/verify.php?user=admin@bank.com",
+                risk_score: 95,
+                classification: "Risco Elevado",
+                summary: "URL de alto risco: utiliza endereço IP direto, protocolo HTTP inseguro e símbolo @.",
+                created_at: "2026-03-29 14:22",
+                indicators: [
+                    "Utiliza protocolo HTTP inseguro (sem encriptação TLS).",
+                    "O anfitrião é um endereço IPv4 direto (185.220.101.45) em vez de um domínio certificado.",
+                    "Contém o carácter '@' para ofuscação de destino.",
+                    "Inclui palavras-chave de engodo: login, secure, verify, bank."
+                ],
+                explanation: "Análise heurística estrutural: combinação severa de indicadores técnicos frequentemente usada em servidores de phishing."
+            },
+            {
+                id: 4,
+                scan_type: "PHISHING",
+                target_preview: "CTT Expresso: A sua encomenda aguarda pagamento de taxa alfandegária de 2,99 EUR...",
+                risk_score: 52,
+                classification: "Risco Médio",
+                summary: "Mensagem suspeita de cobrança de taxa de entrega com pressão temporal.",
+                created_at: "2026-03-29 16:40",
+                indicators: [
+                    "Solicitação de pagamento de pequeno valor para desbloquear entrega.",
+                    "Falta de número de seguimento oficial verificável."
+                ],
+                explanation: "A mensagem utiliza o pretexto de uma encomenda retida (Smishing) para recolher dados de cartão de crédito."
+            }
+        ];
+
+        let scanDatabase = [];
+        let riskChartInstance = null;
+        let volumeChartInstance = null;
+
+        function loadDatabase() {
+            try {
+                const saved = localStorage.getItem("cyberguard_sqlite_scans");
+                if (saved) {
+                    scanDatabase = JSON.parse(saved);
+                } else {
+                    scanDatabase = [...INITIAL_SCANS];
+                    saveDatabase();
+                }
+            } catch (e) {
+                scanDatabase = [...INITIAL_SCANS];
+            }
+        }
+
+        function saveDatabase() {
+            try {
+                localStorage.setItem("cyberguard_sqlite_scans", JSON.stringify(scanDatabase));
+            } catch (e) {}
+            updateAllStatsAndUI();
+        }
+
+        // =========================================================================
+        // 2. NAVEGAÇÃO ENTRE LANDING PAGE (RED NOIR) E PLATAFORMA (SOC APP)
+        // =========================================================================
+        function switchMode(mode) {
+            const landing = document.getElementById("landing-view");
+            const app = document.getElementById("app-view");
+            const toggleLabel = document.getElementById("mode-toggle-label");
+            const toggleBtn = document.getElementById("mode-toggle-btn");
+
+            if (mode === "app") {
+                landing.classList.add("hidden");
+                app.classList.remove("hidden");
+                toggleLabel.textContent = "Ver Landing Page";
+                toggleBtn.setAttribute("onclick", "switchMode('landing')");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                updateAllStatsAndUI();
+            } else {
+                app.classList.add("hidden");
+                landing.classList.remove("hidden");
+                toggleLabel.textContent = "Abrir Plataforma";
+                toggleBtn.setAttribute("onclick", "openAppTool('dashboard')");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        }
+
+        function openAppTool(sectionName) {
+            switchMode("app");
+            document.querySelectorAll(".app-section").forEach((sec) => sec.classList.add("hidden"));
+            const target = document.getElementById(`tab-${sectionName}`);
+            if (target) target.classList.remove("hidden");
+
+            document.querySelectorAll(".sidebar-btn").forEach((btn) => {
+                if (btn.dataset.nav === sectionName) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+
+            if (sectionName === "dashboard") {
+                updateAllStatsAndUI();
+            } else if (sectionName === "history") {
+                renderHistoryTable();
+            }
+        }
+
+        function getBadgeClass(classification) {
+            if (classification === "Risco Elevado") return "badge-high";
+            if (classification === "Risco Médio") return "badge-medium";
+            return "badge-low";
+        }
+
+        // =========================================================================
+        // 3. CÁLCULO DE ESTATÍSTICAS REAIS E GRÁFICOS (PAINEL PRINCIPAL)
+        // =========================================================================
+        function updateAllStatsAndUI() {
+            const total = scanDatabase.length;
+            const high = scanDatabase.filter((s) => s.classification === "Risco Elevado").length;
+            const medium = scanDatabase.filter((s) => s.classification === "Risco Médio").length;
+            const low = scanDatabase.filter((s) => s.classification === "Risco Baixo").length;
+            const threats = high + medium;
+            const urlCount = scanDatabase.filter((s) => s.scan_type === "URL").length;
+            const phishCount = scanDatabase.filter((s) => s.scan_type === "PHISHING").length;
+            const avg = total > 0
+                ? (scanDatabase.reduce((acc, item) => acc + item.risk_score, 0) / total).toFixed(1)
+                : "0.0";
+
+            const navCounter = document.getElementById("nav-scans-counter");
+            if (navCounter) navCounter.textContent = `${total} Análises`;
+
+            document.getElementById("stat-total").textContent = total;
+            document.getElementById("stat-breakdown-type").textContent = `URLs: ${urlCount} | Phishing: ${phishCount}`;
+            document.getElementById("stat-threats").textContent = threats;
+            document.getElementById("stat-high").textContent = high;
+            document.getElementById("stat-med-low").textContent = `Médio: ${medium} | Baixo: ${low}`;
+            document.getElementById("stat-avg").innerHTML = `${avg}<span class="text-sm text-zinc-500">/100</span>`;
+
+            renderRecentTable();
+            renderHistoryTable();
+            renderCharts(low, medium, high, urlCount, phishCount);
+        }
+
+        function renderCharts(low, medium, high, urlCount, phishCount) {
+            if (typeof Chart === "undefined") return;
+
+            const riskCtx = document.getElementById("chartRiskDistribution");
+            if (riskCtx) {
+                if (riskChartInstance) riskChartInstance.destroy();
+                riskChartInstance = new Chart(riskCtx, {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Risco Baixo (0–29)", "Risco Médio (30–59)", "Risco Elevado (60–100)"],
+                        datasets: [{
+                            data: (low + medium + high === 0) ? [1, 0, 0] : [low, medium, high],
+                            backgroundColor: ["#10b981", "#f59e0b", "#ef233c"],
+                            borderColor: "#090b10",
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: "bottom", labels: { color: "#d4d4d8", font: { family: "Inter", size: 11 } } }
+                        }
+                    }
+                });
+            }
+
+            const volCtx = document.getElementById("chartModuleVolume");
+            if (volCtx) {
+                if (volumeChartInstance) volumeChartInstance.destroy();
+                volumeChartInstance = new Chart(volCtx, {
+                    type: "bar",
+                    data: {
+                        labels: ["Análises de URLs", "Deteções de Phishing"],
+                        datasets: [{
+                            label: "Registos na Base de Dados",
+                            data: [urlCount, phishCount],
+                            backgroundColor: ["#ef233c", "#ff4500"],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, ticks: { color: "#a1a1aa", precision: 0 }, grid: { color: "rgba(255,255,255,0.05)" } },
+                            x: { ticks: { color: "#e4e4e7" }, grid: { display: false } }
+                        },
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            }
+        }
+
+        function renderRecentTable() {
+            const tbody = document.getElementById("dashboard-recent-tbody");
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
+            const recent = [...scanDatabase].sort((a, b) => b.id - a.id).slice(0, 5);
+            if (recent.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-zinc-500">Nenhuma análise registada.</td></tr>`;
+                return;
+            }
+
+            recent.forEach((item) => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-white/[0.02]";
+                tr.innerHTML = `
+                    <td class="py-3 px-3 font-mono text-xs text-zinc-300">${item.scan_type}</td>
+                    <td class="py-3 px-3 max-w-xs truncate text-zinc-200 font-mono text-xs"></td>
+                    <td class="py-3 px-3 font-mono font-bold">${item.risk_score}/100</td>
+                    <td class="py-3 px-3"><span class="px-2.5 py-1 rounded-full text-xs font-medium ${getBadgeClass(item.classification)}">${item.classification}</span></td>
+                    <td class="py-3 px-3 text-right">
+                        <button type="button" onclick="showScanDetail(${item.id})" class="text-xs font-mono text-[#ef233c] hover:underline">Detalhes</button>
+                    </td>
+                `;
+                tr.children[1].textContent = item.target_preview;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderHistoryTable() {
+            const tbody = document.getElementById("full-history-tbody");
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
+            const tFilter = document.getElementById("history-filter-type")?.value || "ALL";
+            const rFilter = document.getElementById("history-filter-risk")?.value || "ALL";
+
+            const filtered = [...scanDatabase]
+                .sort((a, b) => b.id - a.id)
+                .filter((item) => (tFilter === "ALL" || item.scan_type === tFilter) && (rFilter === "ALL" || item.classification === rFilter));
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-zinc-500">Nenhum registo corresponde aos filtros selecionados.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach((item) => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-white/[0.02]";
+                tr.innerHTML = `
+                    <td class="py-3 px-3 font-mono text-xs text-zinc-500">#${item.id}</td>
+                    <td class="py-3 px-3 font-mono text-xs">${item.scan_type}</td>
+                    <td class="py-3 px-3 max-w-xs truncate text-zinc-200 font-mono text-xs"></td>
+                    <td class="py-3 px-3 font-mono font-bold">${item.risk_score}/100</td>
+                    <td class="py-3 px-3"><span class="px-2.5 py-1 rounded-full text-xs font-medium ${getBadgeClass(item.classification)}">${item.classification}</span></td>
+                    <td class="py-3 px-3 font-mono text-xs text-zinc-400">${item.created_at}</td>
+                    <td class="py-3 px-3 text-right">
+                        <button type="button" onclick="showScanDetail(${item.id})" class="text-xs font-mono text-[#ef233c] hover:underline">Ver Relatório</button>
+                    </td>
+                `;
+                tr.children[2].textContent = item.target_preview;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function showScanDetail(id) {
+            const record = scanDatabase.find((s) => s.id === id);
+            if (!record) return;
+
+            const modal = document.getElementById("scan-detail-modal");
+            const content = document.getElementById("modal-scan-content");
+            content.innerHTML = "";
+
+            const header = document.createElement("div");
+            header.className = "p-4 rounded-xl bg-black border border-white/10 space-y-1";
+            header.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-mono text-zinc-400">Registo #${record.id} • ${record.scan_type} • ${record.created_at}</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-medium ${getBadgeClass(record.classification)}">${record.classification} (${record.risk_score}/100)</span>
+                </div>
+                <p class="font-mono text-xs text-white break-all pt-1"></p>
+            `;
+            header.querySelector("p").textContent = record.target_preview;
+            content.appendChild(header);
+
+            const indTitle = document.createElement("h4");
+            indTitle.className = "text-xs font-mono uppercase text-zinc-400 pt-2";
+            indTitle.textContent = "Indicadores Identificados:";
+            content.appendChild(indTitle);
+
+            const ul = document.createElement("ul");
+            ul.className = "space-y-1.5 bg-black p-4 rounded-xl border border-white/10 text-xs";
+            (record.indicators || []).forEach((ind) => {
+                const li = document.createElement("li");
+                li.textContent = `• ${ind}`;
+                ul.appendChild(li);
+            });
+            content.appendChild(ul);
+
+            if (record.explanation) {
+                const expBox = document.createElement("div");
+                expBox.className = "p-4 rounded-xl bg-black border border-[#ef233c]/40 text-xs leading-relaxed text-zinc-200";
+                expBox.textContent = record.explanation;
+                content.appendChild(expBox);
+            }
+
+            modal.classList.remove("hidden");
+        }
+
+        function closeDetailModal() {
+            document.getElementById("scan-detail-modal").classList.add("hidden");
+        }
+
+        // =========================================================================
+        // 4. MOTOR A: ANALISADOR HEURÍSTICO DE URLS (services/url_scanner.py)
+        // =========================================================================
+        function fillUrlSample(sample) {
+            document.getElementById("scanner-url-input").value = sample;
+        }
+
+        function runHeuristicUrlAnalysis(rawInput) {
+            let normalized = rawInput.trim();
+            if (!/^https?:\/\//i.test(normalized)) {
+                normalized = "https://" + normalized;
+            }
+
+            let parsed;
+            try {
+                parsed = new URL(normalized);
+            } catch (err) {
+                return { valid: false, error: "Formato de endereço URL inválido." };
+            }
+
+            const domain = parsed.hostname.toLowerCase();
+            const scheme = parsed.protocol.replace(":", "").toLowerCase();
+            const isHttps = scheme === "https";
+            let score = 0;
+            const indicators = [];
+
+            if (!isHttps) {
+                score += 35;
+                indicators.push("Protocolo HTTP não encriptado detetado (vulnerável a interceção Man-in-the-Middle).");
+            } else {
+                indicators.push("Protocolo HTTPS encriptado ativo.");
+            }
+
+            if (/^\d{1,3}(\.\d{1,3}){3}$/.test(domain)) {
+                score += 45;
+                indicators.push(`O anfitrião utiliza um endereço IP direto (${domain}) em vez de um nome de domínio.`);
+            }
+
+            if (rawInput.includes("@")) {
+                score += 35;
+                indicators.push("Presença do símbolo '@' no URL (técnica clássica de ofuscação de credenciais/destino).");
+            }
+
+            if (normalized.length > 85) {
+                score += 15;
+                indicators.push(`Comprimento elevado do URL (${normalized.length} caracteres), comum em links de rastreio ou engodo.`);
+            }
+
+            const subParts = domain.split(".");
+            if (subParts.length > 3 && !/^\d+\.\d+\.\d+\.\d+$/.test(domain)) {
+                score += 15;
+                indicators.push(`Múltiplos subdomínios detetados (${subParts.length - 2} subníveis).`);
+            }
+
+            const riskyTlds = [".xyz", ".top", ".click", ".zip", ".loan", ".work", ".tk"];
+            if (riskyTlds.some((tld) => domain.endsWith(tld))) {
+                score += 25;
+                indicators.push("Extensão de domínio (TLD) frequentemente associada a campanhas temporárias de phishing.");
+            }
+
+            const keywords = ["login", "verify", "update", "secure", "account", "bank", "confirm", "signin", "wallet", "atualizar"];
+            const matchedKw = keywords.filter((kw) => normalized.toLowerCase().includes(kw));
+            if (matchedKw.length > 0) {
+                score += Math.min(40, matchedKw.length * 15);
+                indicators.push(`Contém palavras-chave sensíveis de autenticação: ${matchedKw.join(", ")}.`);
+            }
+
+            score = Math.min(100, Math.max(5, score));
+            let classification = "Risco Baixo";
+            let summary = "Estrutura lexical limpa sem padrões suspeitos evidentes.";
+            if (score >= 60) {
+                classification = "Risco Elevado";
+                summary = "Múltiplos indicadores estruturais de risco elevado identificados no URL.";
+            } else if (score >= 30) {
+                classification = "Risco Médio";
+                summary = "O endereço apresenta características estruturais que recomendam precaução.";
+            }
+
+            return {
+                valid: true,
+                normalized_url: normalized,
+                domain,
+                is_https: isHttps,
+                risk_score: score,
+                classification,
+                summary,
+                indicators
+            };
+        }
+
+        document.getElementById("url-scanner-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const raw = document.getElementById("scanner-url-input").value;
+            const res = runHeuristicUrlAnalysis(raw);
+            if (!res.valid) return;
+
+            document.getElementById("res-url-target").textContent = res.normalized_url;
+            document.getElementById("res-url-summary").textContent = res.summary;
+            document.getElementById("res-url-score").textContent = `${res.risk_score}/100`;
+
+            const badge = document.getElementById("res-url-badge");
+            badge.textContent = res.classification;
+            badge.className = `inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${getBadgeClass(res.classification)}`;
+
+            document.getElementById("res-url-domain").textContent = res.domain;
+            document.getElementById("res-url-protocol").textContent = res.is_https ? "HTTPS (Encriptado)" : "HTTP (Não Seguro)";
+
+            const ul = document.getElementById("res-url-indicators");
+            ul.innerHTML = "";
+            res.indicators.forEach((ind) => {
+                const li = document.createElement("li");
+                li.className = "p-3 rounded-xl bg-black border border-white/10";
+                li.textContent = `• ${ind}`;
+                ul.appendChild(li);
+            });
+
+            document.getElementById("scanner-result-card").classList.remove("hidden");
+
+            const now = new Date().toISOString().slice(0, 16).replace("T", " ");
+            scanDatabase.push({
+                id: scanDatabase.length ? Math.max(...scanDatabase.map((s) => s.id)) + 1 : 1,
+                scan_type: "URL",
+                target_preview: res.normalized_url,
+                risk_score: res.risk_score,
+                classification: res.classification,
+                summary: res.summary,
+                created_at: now,
+                indicators: res.indicators,
+                explanation: "Avaliação gerada pelo motor heurístico estrutural de URLs do CyberGuard AI."
+            });
+            saveDatabase();
+        });
+
+        // Quick Landing Page Scanner Form
+        document.getElementById("landing-quick-scan-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const urlVal = document.getElementById("landing-quick-url").value.trim();
+            if (!urlVal) return;
+            openAppTool("scanner");
+            document.getElementById("scanner-url-input").value = urlVal;
+            document.getElementById("url-scanner-form").dispatchEvent(new Event("submit"));
+        });
+
+        // =========================================================================
+        // 5. MOTOR B: DETETOR DE PHISHING COM IA (services/phishing_detector.py)
+        // =========================================================================
+        function loadPhishingSample(key) {
+            const typeEl = document.getElementById("phishing-type");
+            const area = document.getElementById("phishing-textarea");
+            if (key === "sms_bank") {
+                typeEl.value = "Mensagem SMS";
+                area.value = "AVISO URGENTE SANTANDER/MBWAY: O seu acesso foi temporariamente bloqueado por seguranca. Evite o cancelamento definitivo da conta validando os seus dados nas proximas 2 horas em: http://portal-seguranca-validacao.xyz/login";
+            } else if (key === "email_customs") {
+                typeEl.value = "Email";
+                area.value = "Caro cliente, a sua encomenda internacional encontra-se retida na alfândega. Para evitar a devolução imediata ao remetente, regularize a taxa administrativa de 3,45 EUR introduzindo os dados do seu cartão de crédito no link: http://desalfandegar-envio-pt.top/pagamento";
+            } else {
+                typeEl.value = "Email";
+                area.value = "Olá equipa, relembro que a apresentação final do projeto CyberGuard AI da disciplina de Desenvolvimento de Software decorrerá na próxima terça-feira às 10h30 na sala 14. Tragam o portátil com o repositório atualizado.";
+            }
+        }
+
+        document.getElementById("phishing-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const source = document.getElementById("phishing-type").value;
+            const text = document.getElementById("phishing-textarea").value.trim();
+            if (!text) return;
+
+            const lower = text.toLowerCase();
+            let score = 10;
+            const indicators = [];
+
+            const urgencyWords = ["urgente", "bloqueado", "suspensa", "24 horas", "2 horas", "imediata", "evite o cancelamento", "último aviso"];
+            const foundUrgency = urgencyWords.filter((w) => lower.includes(w));
+            if (foundUrgency.length > 0) {
+                score += 35;
+                indicators.push(`Manipulação psicológica e sentido de urgência detetados (${foundUrgency.join(", ")}).`);
+            }
+
+            if (/http:\/\/[^\s]+/i.test(text)) {
+                score += 35;
+                indicators.push("Contém hiperligação HTTP não segura embutida no texto.");
+            } else if (/https?:\/\/[^\s]+/i.test(text)) {
+                score += 15;
+                indicators.push("Contém hiperligação externa que requer verificação do domínio real.");
+            }
+
+            const finWords = ["cartão de crédito", "conta bancária", "mbway", "taxa", "validar os seus dados", "password", "pin", "pagamento"];
+            const foundFin = finWords.filter((w) => lower.includes(w));
+            if (foundFin.length > 0) {
+                score += 25;
+                indicators.push(`Solicitação de dados financeiros ou credenciais sensíveis (${foundFin.join(", ")}).`);
+            }
+
+            score = Math.min(98, score);
+            if (indicators.length === 0) {
+                score = 8;
+                indicators.push("Linguagem natural e colaborativa sem gatilhos de coação ou links suspeitos.");
+            }
+
+            const classification = score >= 60 ? "Risco Elevado" : (score >= 30 ? "Risco Médio" : "Risco Baixo");
+            const summary = score >= 60
+                ? `Elevada probabilidade de Phishing / Engenharia Social via ${source}.`
+                : (score >= 30 ? `${source} com elementos suspeitos que exigem confirmação.` : `${source} aparenta ser uma comunicação legítima.`);
+
+            const explanation = score >= 60
+                ? `Análise Gemini AI: Esta mensagem utiliza técnicas clássicas de Engenharia Social. Primeiro, cria um estado de alarme ("${foundUrgency.join(", ") || "bloqueio/urgência"}") para reduzir o pensamento crítico do destinatário. De seguida, encaminha o utilizador para uma ação imediata envolvendo dados bancários ou links não verificados. Recomendação Defensiva: Nunca cliques no link; acede diretamente à aplicação oficial da entidade.`
+                : (score >= 30
+                    ? `Análise Gemini AI: O texto apresenta pedidos financeiros ou links externos que merecem cautela. Confirma sempre a identidade do remetente através de um canal oficial independente antes de efetuar qualquer pagamento.`
+                    : `Análise Gemini AI: O conteúdo analisado não apresenta tentativas de manipulação urgente, falsificação de identidade nem recolha de credenciais.`);
+
+            document.getElementById("res-phish-summary").textContent = summary;
+            document.getElementById("res-phish-score").textContent = `${score}/100`;
+            const badge = document.getElementById("res-phish-badge");
+            badge.textContent = classification;
+            badge.className = `inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${getBadgeClass(classification)}`;
+
+            const ul = document.getElementById("res-phish-indicators");
+            ul.innerHTML = "";
+            indicators.forEach((ind) => {
+                const li = document.createElement("li");
+                li.className = "p-3 rounded-xl bg-black border border-white/10";
+                li.textContent = `• ${ind}`;
+                ul.appendChild(li);
+            });
+
+            document.getElementById("res-phish-explanation").textContent = explanation;
+            document.getElementById("phishing-result-card").classList.remove("hidden");
+
+            const now = new Date().toISOString().slice(0, 16).replace("T", " ");
+            scanDatabase.push({
+                id: scanDatabase.length ? Math.max(...scanDatabase.map((s) => s.id)) + 1 : 1,
+                scan_type: "PHISHING",
+                target_preview: text.slice(0, 95) + (text.length > 95 ? "..." : ""),
+                risk_score: score,
+                classification,
+                summary,
+                created_at: now,
+                indicators,
+                explanation
+            });
+            saveDatabase();
+        });
+
+        // =========================================================================
+        // 6. MOTOR C: VERIFICADOR DE PALAVRAS-PASSE ZERO-STORAGE
+        // =========================================================================
+        const pwdInput = document.getElementById("pwd-live-input");
+        const pwdToggle = document.getElementById("pwd-toggle-visibility");
+
+        pwdToggle.addEventListener("click", () => {
+            pwdInput.type = pwdInput.type === "password" ? "text" : "password";
+        });
+
+        function evaluatePassword(pwd) {
+            const len = pwd.length;
+            const hasLow = /[a-z]/.test(pwd);
+            const hasUp = /[A-Z]/.test(pwd);
+            const hasNum = /\d/.test(pwd);
+            const hasSym = /[^a-zA-Z0-9]/.test(pwd);
+
+            let pool = 0;
+            if (hasLow) pool += 26;
+            if (hasUp) pool += 26;
+            if (hasNum) pool += 10;
+            if (hasSym) pool += 32;
+
+            const entropy = (len > 0 && pool > 0) ? (len * Math.log2(pool)).toFixed(1) : "0.0";
+
+            let score = 0;
+            const suggestions = [];
+
+            if (len >= 14) score += 40;
+            else if (len >= 10) {
+                score += 25;
+                suggestions.push("Aumenta o comprimento para pelo menos 14 caracteres para maximizar a entropia.");
+            } else if (len > 0) {
+                score += 10;
+                suggestions.push("Palavra-passe demasiado curta (mínimo recomendado: 12 a 14 caracteres).");
+            }
+
+            if (hasLow && hasUp) score += 20;
+            else suggestions.push("Combina letras maiúsculas (A-Z) e minúsculas (a-z).");
+
+            if (hasNum) score += 15;
+            else suggestions.push("Inclui algarismos numéricos (0-9).");
+
+            if (hasSym) score += 25;
+            else suggestions.push("Adiciona símbolos especiais (!@#$%^&*) para dificultar ataques de força bruta.");
+
+            if (/1234|password|qwerty|admin|1111/i.test(pwd)) {
+                score = Math.max(10, score - 35);
+                suggestions.unshift("Atenção: Padrão de dicionário ou sequência de teclado muito comum detetada!");
+            }
+
+            score = len === 0 ? 0 : Math.min(100, score);
+
+            document.getElementById("pwd-score").textContent = score;
+            document.getElementById("pwd-entropy").textContent = `${entropy} bits de entropia`;
+
+            const bar = document.getElementById("pwd-bar");
+            bar.style.width = `${score}%`;
+
+            const label = document.getElementById("pwd-label");
+            if (len === 0) {
+                label.textContent = "A aguardar introdução...";
+                label.className = "text-2xl font-bold font-manrope text-zinc-400";
+            } else if (score >= 80) {
+                label.textContent = "Palavra-passe Forte";
+                label.className = "text-2xl font-bold font-manrope text-emerald-400";
+                bar.className = "h-full bg-emerald-500 transition-all duration-300";
+            } else if (score >= 50) {
+                label.textContent = "Segurança Moderada";
+                label.className = "text-2xl font-bold font-manrope text-amber-400";
+                bar.className = "h-full bg-amber-500 transition-all duration-300";
+            } else {
+                label.textContent = "Palavra-passe Fraca / Vulnerável";
+                label.className = "text-2xl font-bold font-manrope text-[#ef233c]";
+                bar.className = "h-full bg-[#ef233c] transition-all duration-300";
+            }
+
+            document.getElementById("pwd-crit-len").textContent = `Comprimento: ${len}`;
+            const setCritStyle = (id, ok) => {
+                document.getElementById(id).className = ok
+                    ? "p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300"
+                    : "p-3 rounded-xl bg-black border border-white/10 text-zinc-500";
+            };
+            setCritStyle("pwd-crit-len", len >= 12);
+            setCritStyle("pwd-crit-low", hasLow);
+            setCritStyle("pwd-crit-up", hasUp);
+            setCritStyle("pwd-crit-num", hasNum);
+            setCritStyle("pwd-crit-sym", hasSym);
+
+            const ul = document.getElementById("pwd-suggestions");
+            ul.innerHTML = "";
+            const finalSugg = suggestions.length ? suggestions : ["Excelente! Esta credencial possui elevada resistência contra ataques de força bruta."];
+            finalSugg.forEach((s) => {
+                const li = document.createElement("li");
+                li.className = "bg-black p-3 rounded-xl border border-white/10";
+                li.textContent = `• ${s}`;
+                ul.appendChild(li);
+            });
+        }
+
+        pwdInput.addEventListener("input", (e) => evaluatePassword(e.target.value));
+
+        function generateSecurePassword() {
+            const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_-+=";
+            let generated = "";
+            const array = new Uint32Array(16);
+            window.crypto.getRandomValues(array);
+            for (let i = 0; i < 16; i++) {
+                generated += chars[array[i] % chars.length];
+            }
+            pwdInput.type = "text";
+            pwdInput.value = generated;
+            evaluatePassword(generated);
+        }
+
+        // =========================================================================
+        // 7. MOTOR D: ASSISTENTE DE CIBERSEGURANÇA ÉTICA (services/ai_service.py)
+        // =========================================================================
+        function generateAssistantReply(question) {
+            const q = question.toLowerCase();
+            if (q.includes("ransomware")) {
+                return "🛡️ **Ransomware — Explicação e Defesa:**\nO Ransomware é um tipo de malware que encripta os ficheiros de um sistema e exige um resgate financeiro para devolver a chave de desencriptação.\n\n**Recomendações Defensivas:**\n1. Manter cópias de segurança (Backups) segundo a regra 3-2-1 (incluindo uma cópia offline/imutável).\n2. Atualizar continuamente o sistema operativo e aplicar patches de segurança.\n3. Filtrar anexos de email e treinar os utilizadores contra phishing.";
+            }
+            if (q.includes("sql") || q.includes("injection")) {
+                return "🛡️ **Prevenção de SQL Injection (SQLi):**\nO SQL Injection ocorre quando dados não validados do utilizador são concatenados diretamente numa instrução SQL.\n\n**Como o CyberGuard AI o previne (`database/models.py`):**\nUtilizamos exclusivamente **Consultas Parametrizadas (Prepared Statements)** com marcadores `?` no SQLite:\n`cursor.execute('INSERT INTO scan_history VALUES (?, ?)', (tipo, score))`\nDesta forma, o motor da base de dados trata o input estritamente como texto literal e nunca como código executável.";
+            }
+            if (q.includes("phishing") || q.includes("spear")) {
+                return "🛡️ **Spear Phishing e Falsificação de Identidade:**\nAo contrário do phishing em massa, o *Spear Phishing* é personalizado para um alvo específico. Os atacantes usam domínios visualmente semelhantes (*typosquatting*, ex: `rnicrosoft.com` em vez de `microsoft.com`) e criam urgência artificial.\n\n**Defesa:** Verificar sempre o cabeçalho do remetente, inspecionar o URL real antes de clicar e ativar Autenticação Multifator (MFA / Passkeys).";
+            }
+            if (q.includes("heurística") || q.includes("threat intelligence")) {
+                return "🛡️ **Análise Heurística vs. Threat Intelligence:**\n• **Análise Heurística (usada no URL Scanner):** Avalia padrões lexicais e estruturais em tempo real (uso de IP direto, falta de HTTPS, símbolos `@`, tamanho do link), sendo capaz de detetar URLs maliciosos acabados de criar (*zero-day*).\n• **Threat Intelligence:** Consulta listas de bloqueio globais de domínios já denunciados e confirmados no passado.";
+            }
+            return `🛡️ **Análise Defensiva CyberGuard AI:**\nSobre a tua questão ("${question}"), em cibersegurança defensiva aplicamos o princípio da **Defesa em Profundidade**: validação rigorosa de dados de entrada, princípio do menor privilégio, palavras-passe com elevada entropia acompanhadas de Autenticação Multifator (2FA) e monitorização contínua de logs.`;
+        }
+
+        function appendChatMessage(sender, text) {
+            const box = document.getElementById("assistant-chat-box");
+            const wrapper = document.createElement("div");
+
+            if (sender === "user") {
+                wrapper.className = "flex justify-end";
+                const bubble = document.createElement("div");
+                bubble.className = "bg-[#ef233c] text-white rounded-2xl px-4 py-3 text-sm max-w-xl";
+                bubble.textContent = text;
+                wrapper.appendChild(bubble);
+            } else {
+                wrapper.className = "flex items-start gap-3";
+                wrapper.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-[#ef233c] flex items-center justify-center shrink-0 mt-0.5">
+                        <iconify-icon icon="lucide:bot" class="text-white"></iconify-icon>
+                    </div>
+                    <div class="bg-black border border-white/10 rounded-2xl p-4 text-sm text-zinc-200 max-w-2xl leading-relaxed whitespace-pre-line"></div>
+                `;
+                wrapper.children[1].textContent = text;
+            }
+
+            box.appendChild(wrapper);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function askAssistantTopic(promptText) {
+            appendChatMessage("user", promptText);
+            const reply = generateAssistantReply(promptText);
+            setTimeout(() => appendChatMessage("bot", reply), 220);
+        }
+
+        document.getElementById("assistant-chat-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const input = document.getElementById("assistant-user-input");
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = "";
+            askAssistantTopic(text);
+        });
+
+        // =========================================================================
+        // 8. DEFINIÇÕES DA BASE DE DADOS
+        // =========================================================================
+        function showSettingsToast(msg) {
+            const toast = document.getElementById("settings-toast");
+            toast.textContent = msg;
+            toast.classList.remove("hidden");
+            setTimeout(() => toast.classList.add("hidden"), 4000);
+        }
+
+        function clearAllDatabase() {
+            scanDatabase = [];
+            saveDatabase();
+            showSettingsToast("Todos os registos do histórico SQLite foram removidos. Os gráficos estão agora a zero.");
+        }
+
+        function resetDemoDatabase() {
+            scanDatabase = [...INITIAL_SCANS];
+            saveDatabase();
+            showSettingsToast("Registos iniciais de demonstração repostos com sucesso.");
+        }
+
+        // Inicialização
+        document.addEventListener("DOMContentLoaded", () => {
+            loadDatabase();
+            updateAllStatsAndUI();
+        });
+    </script>
+</body>
+</html>
