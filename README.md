@@ -72,7 +72,7 @@ Multilingual Profanity Filter: Built-in blacklisting filter that screens usernam
 
 Privilege Levels:
 
-Administrator Accounts: Full access to the SQLite users table, Live Threat Feed, and advanced engineering/OSINT modules. (Default Admin: admin@cyberguard.pt | Password: nigga333larp)
+Administrator Accounts: Full access to the SQLite users table, Live Threat Feed, and advanced engineering/OSINT modules.
 
 Standard Users: Access to core analysis tools and personal security features.
 
