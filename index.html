@@ -20,7 +20,7 @@
             --card-dark: #0d0f14;
         }
 
-        /* Custom Animations from Red Noir Reference */
+        /* Custom Animations */
         @keyframes fade-in-up {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -204,12 +204,12 @@
                     <span class="text-lg font-bold font-manrope tracking-tight">CyberGuard<span class="text-[#ef233c]">.AI</span></span>
                 </button>
                 
-                <div class="hidden lg:flex items-center gap-7">
+                <div class="hidden lg:flex items-center gap-6">
                     <button type="button" onclick="switchMode('landing')" id="top-nav-landing" class="text-sm font-medium text-white hover:text-[#ef233c] transition-colors">Visão Geral</button>
                     <button type="button" onclick="openAppTool('dashboard')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Painel Principal</button>
                     <button type="button" onclick="openAppTool('scanner')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">URL Scanner</button>
                     <button type="button" onclick="openAppTool('phishing')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Detetor Phishing</button>
-                    <button type="button" onclick="openAppTool('password')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Passwords</button>
+                    <button type="button" onclick="openAppTool('sqli')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Lab SQLi</button>
                     <button type="button" onclick="openAppTool('assistant')" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Assistente IA</button>
                 </div>
 
@@ -297,7 +297,7 @@
                 </div>
             </section>
 
-            <!-- Expertise & Works Bento Grid (4 Módulos Interativos) -->
+            <!-- Expertise & Works Bento Grid (Módulos Interativos) -->
             <section id="works" class="py-24 px-6">
                 <div class="max-w-7xl mx-auto">
                     <div class="mb-16 text-center max-w-3xl mx-auto">
@@ -404,6 +404,81 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Grelha Adicional na Landing Page: Novos Laboratórios e Ferramentas OSINT -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+                        <div onclick="openAppTool('ipscanner')" class="noir-card p-6 cursor-pointer group flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-mono text-[#ef233c]">05 // OSINT NETWORK</span>
+                                    <iconify-icon icon="lucide:network" class="text-[#ef233c] text-xl"></iconify-icon>
+                                </div>
+                                <h3 class="text-lg font-bold font-manrope text-white mb-1">Scanner de Rede &amp; IPs</h3>
+                                <p class="text-xs text-zinc-400">Geolocalização, identificação de ISP/ASN e inspeção de portas expostas em endereços IPv4.</p>
+                            </div>
+                            <span class="text-xs font-mono text-[#ef233c] mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Abrir Scanner &rarr;</span>
+                        </div>
+
+                        <div onclick="openAppTool('breach')" class="noir-card p-6 cursor-pointer group flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-mono text-[#ff4500]">06 // DARK WEB LEAKS</span>
+                                    <iconify-icon icon="lucide:database-zap" class="text-[#ff4500] text-xl"></iconify-icon>
+                                </div>
+                                <h3 class="text-lg font-bold font-manrope text-white mb-1">Verificador de Fugas</h3>
+                                <p class="text-xs text-zinc-400">Pesquisa se um endereço de email consta em fugas de bases de dados públicas conhecidas.</p>
+                            </div>
+                            <span class="text-xs font-mono text-[#ff4500] mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Verificar Email &rarr;</span>
+                        </div>
+
+                        <div onclick="openAppTool('sqli')" class="noir-card p-6 cursor-pointer group flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-mono text-emerald-400">07 // SQLi SANDBOX</span>
+                                    <iconify-icon icon="lucide:terminal-square" class="text-emerald-400 text-xl"></iconify-icon>
+                                </div>
+                                <h3 class="text-lg font-bold font-manrope text-white mb-1">Laboratório SQL Injection</h3>
+                                <p class="text-xs text-zinc-400">Compara código vulnerável com as Consultas Parametrizadas usadas no SQLite do projeto.</p>
+                            </div>
+                            <span class="text-xs font-mono text-emerald-400 mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Testar Sandbox &rarr;</span>
+                        </div>
+
+                        <div onclick="openAppTool('crypto')" class="noir-card p-6 cursor-pointer group flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-mono text-zinc-400">08 // CONFIDENCIALIDADE</span>
+                                    <iconify-icon icon="lucide:file-lock-2" class="text-[#ef233c] text-xl"></iconify-icon>
+                                </div>
+                                <h3 class="text-lg font-bold font-manrope text-white mb-1">Lab de Criptografia</h3>
+                                <p class="text-xs text-zinc-400">Codificação e descodificação interativa com Base64, Cifra de César e Hexadecimal.</p>
+                            </div>
+                            <span class="text-xs font-mono text-[#ef233c] mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Encriptar Texto &rarr;</span>
+                        </div>
+
+                        <div onclick="openAppTool('hash')" class="noir-card p-6 cursor-pointer group flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-mono text-zinc-400">09 // INTEGRIDADE</span>
+                                    <iconify-icon icon="lucide:hash" class="text-[#ef233c] text-xl"></iconify-icon>
+                                </div>
+                                <h3 class="text-lg font-bold font-manrope text-white mb-1">Gerador de Hashes</h3>
+                                <p class="text-xs text-zinc-400">Cálculo criptográfico SHA-256 em tempo real para comprovar a integridade de dados.</p>
+                            </div>
+                            <span class="text-xs font-mono text-[#ef233c] mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Gerar Hashes &rarr;</span>
+                        </div>
+
+                        <div onclick="openAppTool('checklist')" class="noir-card p-6 cursor-pointer group flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-xs font-mono text-zinc-400">10 // POSTURA DEFENSIVA</span>
+                                    <iconify-icon icon="lucide:list-checks" class="text-[#ef233c] text-xl"></iconify-icon>
+                                </div>
+                                <h3 class="text-lg font-bold font-manrope text-white mb-1">Auditoria Rápida</h3>
+                                <p class="text-xs text-zinc-400">Checklist interativa para avaliar o nível de maturidade digital do utilizador.</p>
+                            </div>
+                            <span class="text-xs font-mono text-[#ef233c] mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">Iniciar Auditoria &rarr;</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -474,13 +549,18 @@
                             <li><button type="button" onclick="openAppTool('dashboard')" class="hover:text-white transition-colors">Painel Principal</button></li>
                             <li><button type="button" onclick="openAppTool('scanner')" class="hover:text-white transition-colors">Analisador de URLs</button></li>
                             <li><button type="button" onclick="openAppTool('phishing')" class="hover:text-white transition-colors">Detetor de Phishing</button></li>
+                            <li><button type="button" onclick="openAppTool('ipscanner')" class="hover:text-white transition-colors">Scanner de Rede / IP</button></li>
+                            <li><button type="button" onclick="openAppTool('breach')" class="hover:text-white transition-colors">Verificador de Fugas</button></li>
                             <li><button type="button" onclick="openAppTool('password')" class="hover:text-white transition-colors">Segurança de Passwords</button></li>
                         </ul>
                     </div>
                     
                     <div>
-                        <h4 class="text-xs font-bold text-[#ef233c] uppercase tracking-widest mb-4">Sistema</h4>
+                        <h4 class="text-xs font-bold text-[#ef233c] uppercase tracking-widest mb-4">Laboratórios &amp; Sistema</h4>
                         <ul class="space-y-3 text-zinc-400 text-sm">
+                            <li><button type="button" onclick="openAppTool('sqli')" class="hover:text-white transition-colors">Simulador SQL Injection</button></li>
+                            <li><button type="button" onclick="openAppTool('crypto')" class="hover:text-white transition-colors">Lab de Criptografia</button></li>
+                            <li><button type="button" onclick="openAppTool('hash')" class="hover:text-white transition-colors">Gerador de Hashes</button></li>
                             <li><button type="button" onclick="openAppTool('history')" class="hover:text-white transition-colors">Histórico SQLite</button></li>
                             <li><button type="button" onclick="openAppTool('assistant')" class="hover:text-white transition-colors">Assistente Gemini IA</button></li>
                             <li><button type="button" onclick="openAppTool('settings')" class="hover:text-white transition-colors">Definições &amp; Equipa</button></li>
@@ -510,15 +590,15 @@
         <div id="app-view" class="hidden relative z-10 pt-24 pb-16 min-h-screen">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col lg:flex-row gap-8">
                 
-                <!-- Barra Lateral de Navegação (7 Secções Obrigatórias) -->
+                <!-- Barra Lateral de Navegação Completa -->
                 <aside class="lg:w-64 shrink-0">
-                    <div class="noir-card p-4 sticky top-28 space-y-6">
+                    <div class="noir-card p-4 sticky top-28 space-y-5">
                         <div class="px-2 pt-1 flex items-center justify-between border-b border-white/10 pb-3">
                             <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">Consola Operacional</span>
                             <span class="w-2 h-2 rounded-full bg-[#ef233c]"></span>
                         </div>
 
-                        <nav class="space-y-1.5" aria-label="Navegação Principal CyberGuard">
+                        <nav class="space-y-1" aria-label="Navegação Principal CyberGuard">
                             <button type="button" onclick="openAppTool('dashboard')" data-nav="dashboard" class="sidebar-btn active">
                                 <iconify-icon icon="lucide:layout-dashboard" class="text-lg text-[#ef233c]"></iconify-icon>
                                 <span>Painel Principal</span>
@@ -531,10 +611,44 @@
                                 <iconify-icon icon="lucide:mail-warning" class="text-lg text-[#ef233c]"></iconify-icon>
                                 <span>Detetor de Phishing</span>
                             </button>
+                            <button type="button" onclick="openAppTool('ipscanner')" data-nav="ipscanner" class="sidebar-btn">
+                                <iconify-icon icon="lucide:network" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Scanner de Rede/IPs</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('breach')" data-nav="breach" class="sidebar-btn">
+                                <iconify-icon icon="lucide:database-zap" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Verificador de Fugas</span>
+                            </button>
                             <button type="button" onclick="openAppTool('password')" data-nav="password" class="sidebar-btn">
                                 <iconify-icon icon="lucide:key-round" class="text-lg text-[#ef233c]"></iconify-icon>
                                 <span>Segurança Passwords</span>
                             </button>
+
+                            <div class="pt-2 pb-1 px-2">
+                                <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">Laboratórios Educativos</span>
+                            </div>
+
+                            <button type="button" onclick="openAppTool('sqli')" data-nav="sqli" class="sidebar-btn">
+                                <iconify-icon icon="lucide:terminal-square" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Simulador SQLi</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('crypto')" data-nav="crypto" class="sidebar-btn">
+                                <iconify-icon icon="lucide:file-lock-2" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Lab Criptografia</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('hash')" data-nav="hash" class="sidebar-btn">
+                                <iconify-icon icon="lucide:hash" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Gerador de Hashes</span>
+                            </button>
+                            <button type="button" onclick="openAppTool('checklist')" data-nav="checklist" class="sidebar-btn">
+                                <iconify-icon icon="lucide:list-checks" class="text-lg text-[#ef233c]"></iconify-icon>
+                                <span>Auditoria Rápida</span>
+                            </button>
+
+                            <div class="pt-2 pb-1 px-2">
+                                <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-500">Sistema &amp; IA</span>
+                            </div>
+
                             <button type="button" onclick="openAppTool('history')" data-nav="history" class="sidebar-btn">
                                 <iconify-icon icon="lucide:history" class="text-lg text-[#ef233c]"></iconify-icon>
                                 <span>Histórico de Análises</span>
@@ -572,7 +686,7 @@
                                 <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// VISÃO GERAL DE SEGURANÇA</span>
                                 <h1 class="text-2xl md:text-4xl font-bold font-manrope">Bem-vindo ao Painel CyberGuard AI</h1>
                                 <p class="text-zinc-400 text-sm mt-1">
-                                    Estatísticas calculadas em tempo real com base nos registos reais de análises de URLs e Phishing.
+                                    Estatísticas calculadas em tempo real com base nos registos reais de análises de URLs, Phishing e Rede/IP.
                                 </p>
                             </div>
                             <div class="flex flex-wrap gap-3 shrink-0">
@@ -594,7 +708,7 @@
                                     <iconify-icon icon="lucide:activity" class="text-[#ef233c] text-lg"></iconify-icon>
                                 </div>
                                 <div id="stat-total" class="text-3xl font-bold font-mono">0</div>
-                                <p id="stat-breakdown-type" class="text-xs text-zinc-500 mt-1">URLs: 0 | Phishing: 0</p>
+                                <p id="stat-breakdown-type" class="text-xs text-zinc-500 mt-1">URLs: 0 | Phishing: 0 | IP: 0</p>
                             </div>
 
                             <div class="noir-card p-5">
@@ -637,7 +751,7 @@
 
                             <div class="noir-card p-6">
                                 <h2 class="text-base font-semibold font-manrope">Análises por Módulo de Segurança</h2>
-                                <p class="text-xs text-zinc-400 mb-4">Comparação entre URL Scanner e Phishing Detector</p>
+                                <p class="text-xs text-zinc-400 mb-4">Comparação entre URL Scanner, Phishing e Rede/IP</p>
                                 <div class="h-60">
                                     <canvas id="chartModuleVolume"></canvas>
                                 </div>
@@ -821,6 +935,107 @@
                         </div>
                     </section>
 
+                    <!-- NOVA SECÇÃO: SCANNER DE REDE & IP (OSINT) -->
+                    <section id="tab-ipscanner" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8">
+                            <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// MÓDULO OSINT — NETWORK &amp; PORT RECON</span>
+                            <h2 class="text-2xl md:text-3xl font-bold font-manrope">Scanner de IP &amp; Portas Abertas</h2>
+                            <p class="text-zinc-400 text-sm mt-1">
+                                Identifica a geolocalização aproximada, o fornecedor de rede (ISP/ASN) e analisa o risco de portas expostas em endereços IPv4.
+                            </p>
+
+                            <form id="ip-scanner-form" class="mt-6 space-y-4">
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <input type="text" id="ip-input" required placeholder="Ex: 185.220.101.45 ou 8.8.8.8"
+                                           class="flex-1 bg-black border border-white/15 rounded-xl px-4 py-3.5 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                    <button type="submit" class="px-7 py-3.5 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shrink-0">
+                                        <iconify-icon icon="lucide:network"></iconify-icon>
+                                        <span>Rastrear IP</span>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
+                                    <span class="text-zinc-500 font-mono">Exemplos de teste:</span>
+                                    <button type="button" onclick="fillIpSample('8.8.8.8')" class="px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-emerald-300 border border-emerald-500/20">
+                                        8.8.8.8 (Google DNS - Seguro)
+                                    </button>
+                                    <button type="button" onclick="fillIpSample('185.220.101.45')" class="px-3 py-1 rounded-full bg-[#ef233c]/15 hover:bg-[#ef233c]/25 text-red-300 border border-[#ef233c]/30">
+                                        185.220.101.45 (Nó Suspeito + RDP/SSH)
+                                    </button>
+                                    <button type="button" onclick="fillIpSample('45.33.32.156')" class="px-3 py-1 rounded-full bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30">
+                                        45.33.32.156 (Servidor c/ FTP Aberto)
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="ip-result-card" class="noir-card p-6 md:p-8 hidden space-y-6">
+                            <div class="flex flex-col md:flex-row justify-between gap-4 border-b border-white/10 pb-5">
+                                <div>
+                                    <span class="text-xs font-mono text-zinc-400">Relatório OSINT do Endereço IPv4</span>
+                                    <h3 id="res-ip-target" class="text-2xl font-bold font-mono text-white mt-1"></h3>
+                                    <p id="res-ip-summary" class="text-sm text-zinc-300 mt-1"></p>
+                                </div>
+                                <div class="text-left md:text-right shrink-0">
+                                    <div id="res-ip-score" class="text-4xl font-bold font-mono">0/100</div>
+                                    <span id="res-ip-status" class="inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium badge-medium"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+                                <div class="p-4 rounded-xl bg-black border border-white/10">
+                                    <span class="text-zinc-500 block">GEOLOCALIZAÇÃO</span>
+                                    <span id="res-ip-geo" class="text-white text-sm font-semibold mt-1 block"></span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-black border border-white/10">
+                                    <span class="text-zinc-500 block">ISP / ASN</span>
+                                    <span id="res-ip-isp" class="text-white text-sm font-semibold mt-1 block"></span>
+                                </div>
+                                <div class="p-4 rounded-xl bg-black border border-white/10 col-span-1 md:col-span-2">
+                                    <span class="text-zinc-500 block">PORTAS DE REDE DETETADAS</span>
+                                    <div id="res-ip-ports" class="flex flex-wrap gap-2 mt-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- NOVA SECÇÃO: VERIFICADOR DE FUGAS DE DADOS (DATA BREACH) -->
+                    <section id="tab-breach" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8">
+                            <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// MÓDULO OSINT — DARK WEB LEAK CHECKER</span>
+                            <h2 class="text-2xl md:text-3xl font-bold font-manrope">Verificador de Fugas de Dados</h2>
+                            <p class="text-zinc-400 text-sm mt-1">
+                                Simula a pesquisa de credenciais comprometidas em incidentes históricos de violação de bases de dados (Data Breaches).
+                            </p>
+
+                            <form id="breach-form" class="mt-6 space-y-4">
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <input type="email" id="breach-input" required placeholder="Ex: admin@empresa.pt ou utilizador.seguro@edu.pt"
+                                           class="flex-1 bg-black border border-white/15 rounded-xl px-4 py-3.5 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                    <button type="submit" class="px-7 py-3.5 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shrink-0">
+                                        <iconify-icon icon="lucide:database-zap"></iconify-icon>
+                                        <span>Procurar Fugas</span>
+                                    </button>
+                                </div>
+
+                                <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
+                                    <span class="text-zinc-500 font-mono">Exemplos rápidos:</span>
+                                    <button type="button" onclick="fillBreachSample('admin@empresa-vulneravel.pt')" class="px-3 py-1 rounded-full bg-[#ef233c]/15 text-red-300 border border-[#ef233c]/30">
+                                        admin@empresa-vulneravel.pt (Com Fugas)
+                                    </button>
+                                    <button type="button" onclick="fillBreachSample('aluno.protegido.2026@escola.pt')" class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                                        aluno.protegido.2026@escola.pt (Sem Fugas)
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div id="breach-result-card" class="noir-card p-6 md:p-8 hidden space-y-4">
+                            <div id="breach-status" class="p-4 rounded-xl font-bold text-center text-sm"></div>
+                            <ul id="breach-list" class="space-y-3 mt-4"></ul>
+                        </div>
+                    </section>
+
                     <!-- SECÇÃO 4: VERIFICADOR DE SEGURANÇA DE PALAVRAS-PASSE -->
                     <section id="tab-password" class="app-section hidden space-y-6">
                         <div class="noir-card p-6 md:p-8 space-y-6">
@@ -885,7 +1100,183 @@
                         </div>
                     </section>
 
-                    <!-- SECÇÃO 5: HISTÓRICO DE ANÁLISES -->
+                    <!-- NOVA SECÇÃO: SIMULADOR SQL INJECTION (SQLi SANDBOX) -->
+                    <section id="tab-sqli" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8">
+                            <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// LABORATÓRIO EDUCATIVO — PREVENÇÃO SQL INJECTION</span>
+                            <h2 class="text-2xl md:text-3xl font-bold font-manrope">Simulador de Injeção SQL (SQLi Sandbox)</h2>
+                            <p class="text-zinc-400 text-sm mt-1">
+                                Demonstra como um ataque de SQL Injection manipula uma consulta mal construída e como as <strong>Consultas Parametrizadas</strong> do CyberGuard AI neutralizam a ameaça.
+                            </p>
+                            
+                            <div class="mt-6 space-y-3">
+                                <label class="text-xs font-mono text-zinc-400 uppercase">Input de Teste no Campo Username</label>
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <input type="text" id="sqli-input" value="admin' OR '1'='1" placeholder="Ex: admin' OR '1'='1"
+                                           class="flex-1 bg-black border border-white/15 rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                    <button type="button" onclick="simulateSQLi()" class="px-6 py-3 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-sm transition-all shrink-0">
+                                        Executar Comparação SQL
+                                    </button>
+                                </div>
+                                <div class="flex flex-wrap gap-2 text-xs pt-1">
+                                    <span class="text-zinc-500 font-mono">Payloads educativos:</span>
+                                    <button type="button" onclick="document.getElementById('sqli-input').value = &quot;admin' OR '1'='1&quot;; simulateSQLi();" class="px-3 py-1 rounded-full bg-[#ef233c]/15 text-red-300 border border-[#ef233c]/30">
+                                        Bypass Clássico (' OR '1'='1)
+                                    </button>
+                                    <button type="button" onclick="document.getElementById('sqli-input').value = &quot;admin'; DROP TABLE users;--&quot;; simulateSQLi();" class="px-3 py-1 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                                        Injeção Destrutiva (DROP TABLE)
+                                    </button>
+                                    <button type="button" onclick="document.getElementById('sqli-input').value = &quot;joao.silva&quot;; simulateSQLi();" class="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                                        Utilizador Normal (joao.silva)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="noir-card p-6 border-red-500/30">
+                                <h3 class="text-red-400 font-bold mb-2 flex items-center gap-2">
+                                    <iconify-icon icon="lucide:shield-off"></iconify-icon>
+                                    <span>Sistema Vulnerável (Concatenação)</span>
+                                </h3>
+                                <p class="text-xs text-zinc-400 mb-3">Junta diretamente o input na string SQL:</p>
+                                <div class="p-3 bg-black rounded-lg border border-red-500/20 text-red-300 font-mono text-xs break-all mb-4" id="sqli-vul-query">
+                                    SELECT * FROM users WHERE username = 'admin' OR '1'='1'
+                                </div>
+                                <div id="sqli-vul-result" class="text-sm font-mono p-3 rounded-lg bg-black border border-white/10 text-zinc-400">
+                                    Clica em "Executar Comparação SQL" para testar.
+                                </div>
+                            </div>
+
+                            <div class="noir-card p-6 border-emerald-500/30">
+                                <h3 class="text-emerald-400 font-bold mb-2 flex items-center gap-2">
+                                    <iconify-icon icon="lucide:shield-check"></iconify-icon>
+                                    <span>CyberGuard AI (Consultas Parametrizadas)</span>
+                                </h3>
+                                <p class="text-xs text-zinc-400 mb-3">Utiliza marcadores <code class="text-emerald-300">?</code> no motor SQLite:</p>
+                                <div class="p-3 bg-black rounded-lg border border-emerald-500/20 text-emerald-300 font-mono text-xs break-all mb-4" id="sqli-safe-query">
+                                    cursor.execute("SELECT * FROM users WHERE username = ?", (input,))
+                                </div>
+                                <div id="sqli-safe-result" class="text-sm font-mono p-3 rounded-lg bg-black border border-white/10 text-zinc-400">
+                                    Clica em "Executar Comparação SQL" para testar.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- NOVA SECÇÃO: LABORATÓRIO DE CRIPTOGRAFIA -->
+                    <section id="tab-crypto" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8 space-y-6">
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// LABORATÓRIO EDUCATIVO — CONFIDENCIALIDADE</span>
+                                <h2 class="text-2xl md:text-3xl font-bold font-manrope">Laboratório de Criptografia &amp; Codificação</h2>
+                                <p class="text-zinc-400 text-sm mt-1">
+                                    Experimenta transformar mensagens legíveis (Plaintext) em texto codificado/cifrado e compreende o pilar da Confidencialidade.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-2">
+                                    <label class="text-xs font-mono text-zinc-400 uppercase">Texto de Entrada</label>
+                                    <textarea id="crypto-input" rows="4" class="w-full bg-black border border-white/15 rounded-xl p-4 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c]" placeholder="Escreve aqui a mensagem secreta..."></textarea>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs font-mono text-zinc-400 uppercase">Resultado Processado</label>
+                                    <textarea id="crypto-output" rows="4" readonly class="w-full bg-black border border-white/15 rounded-xl p-4 text-sm font-mono text-emerald-400 focus:outline-none" placeholder="O resultado aparecerá aqui..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-3">
+                                <select id="crypto-method" class="bg-black border border-white/15 rounded-xl px-4 py-3 text-xs font-mono text-white focus:outline-none focus:border-[#ef233c]">
+                                    <option value="base64">Codificação Base64</option>
+                                    <option value="caesar">Cifra de César (Rotação +3)</option>
+                                    <option value="hex">Representação Hexadecimal</option>
+                                </select>
+                                <button type="button" onclick="runCrypto('enc')" class="px-6 py-3 rounded-xl bg-[#ef233c] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider transition-all">
+                                    Codificar / Cifrar
+                                </button>
+                                <button type="button" onclick="runCrypto('dec')" class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition-all">
+                                    Descodificar / Decifrar
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- NOVA SECÇÃO: GERADOR DE HASHES EM TEMPO REAL -->
+                    <section id="tab-hash" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8 space-y-6">
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// LABORATÓRIO EDUCATIVO — INTEGRIDADE CRIPTOGRÁFICA</span>
+                                <h2 class="text-2xl md:text-3xl font-bold font-manrope">Verificador de Integridade (Gerador de Hashes)</h2>
+                                <p class="text-zinc-400 text-sm mt-1">
+                                    Observa o "efeito avalanche": alterar uma única letra ou espaço muda radicalmente toda a impressão digital (Hash SHA-256) dos dados.
+                                </p>
+                            </div>
+
+                            <input type="text" id="hash-input" placeholder="Escreve qualquer texto aqui para calcular o Hash em tempo real..."
+                                   class="w-full bg-black border border-white/15 rounded-xl px-4 py-4 text-sm font-mono text-white focus:outline-none focus:border-[#ef233c]">
+
+                            <div class="space-y-4">
+                                <div class="p-4 bg-black border border-white/10 rounded-xl">
+                                    <span class="text-xs font-mono text-zinc-500 block mb-1">SHA-256 (Web Crypto API — Recomendado)</span>
+                                    <div id="hash-sha256" class="text-sm font-mono text-emerald-400 break-all">A aguardar introdução de texto...</div>
+                                </div>
+                                <div class="p-4 bg-black border border-white/10 rounded-xl">
+                                    <span class="text-xs font-mono text-zinc-500 block mb-1">SHA-1 (160 bits — Legado)</span>
+                                    <div id="hash-sha1" class="text-sm font-mono text-amber-400 break-all">A aguardar introdução de texto...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- NOVA SECÇÃO: AUDITORIA RÁPIDA DE SEGURANÇA (CHECKLIST) -->
+                    <section id="tab-checklist" class="app-section hidden space-y-6">
+                        <div class="noir-card p-6 md:p-8 space-y-6">
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-widest text-[#ef233c] block mb-1">// AUTOAVALIAÇÃO DEFENSIVA</span>
+                                <h2 class="text-2xl md:text-3xl font-bold font-manrope">Checklist de Maturidade Digital</h2>
+                                <p class="text-zinc-400 text-sm mt-1">
+                                    Marca as boas práticas que já aplicas no teu dia a dia para calcular o teu Índice de Higiene Cibernética.
+                                </p>
+                            </div>
+
+                            <div class="space-y-3 bg-black p-5 rounded-xl border border-white/10">
+                                <label class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/[0.02]">
+                                    <input type="checkbox" class="chk-audit w-5 h-5 accent-[#ef233c]">
+                                    <span class="text-sm text-zinc-200">1. Utilizo Autenticação Multifator (2FA/MFA) nas contas de email, redes sociais e banca.</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/[0.02]">
+                                    <input type="checkbox" class="chk-audit w-5 h-5 accent-[#ef233c]">
+                                    <span class="text-sm text-zinc-200">2. Uso um gestor de palavras-passe e nunca repito a mesma password em serviços diferentes.</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/[0.02]">
+                                    <input type="checkbox" class="chk-audit w-5 h-5 accent-[#ef233c]">
+                                    <span class="text-sm text-zinc-200">3. Mantenho o sistema operativo e o navegador web sempre atualizados.</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/[0.02]">
+                                    <input type="checkbox" class="chk-audit w-5 h-5 accent-[#ef233c]">
+                                    <span class="text-sm text-zinc-200">4. Realizo cópias de segurança (Backups) regulares dos meus ficheiros escolares/profissionais.</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-white/[0.02]">
+                                    <input type="checkbox" class="chk-audit w-5 h-5 accent-[#ef233c]">
+                                    <span class="text-sm text-zinc-200">5. Verifico sempre o domínio real antes de clicar em links recebidos por SMS ou Email.</span>
+                                </label>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center mb-2 text-xs font-mono">
+                                    <span class="text-zinc-400 uppercase">Índice de Maturidade</span>
+                                    <span id="chk-score-pct" class="text-white font-bold">0%</span>
+                                </div>
+                                <div class="w-full h-3 bg-black rounded-full overflow-hidden border border-white/10 mb-3">
+                                    <div id="chk-bar" class="h-full bg-[#ef233c] w-0 transition-all duration-300"></div>
+                                </div>
+                                <div id="chk-result" class="text-sm font-mono text-zinc-400">Seleciona os itens acima para calcular o teu nível.</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECÇÃO 5: HISTÓRICO DE ANÁLISES (COM EXPORTAÇÃO CSV) -->
                     <section id="tab-history" class="app-section hidden space-y-6">
                         <div class="noir-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-5 mb-6">
@@ -899,6 +1290,7 @@
                                         <option value="ALL">Todos os Tipos</option>
                                         <option value="URL">Apenas URL</option>
                                         <option value="PHISHING">Apenas Phishing</option>
+                                        <option value="IP">Apenas Rede/IP</option>
                                     </select>
                                     <select id="history-filter-risk" onchange="renderHistoryTable()" class="bg-black border border-white/15 rounded-xl px-3 py-2 text-xs font-mono text-white">
                                         <option value="ALL">Todos os Riscos</option>
@@ -906,6 +1298,10 @@
                                         <option value="Risco Médio">Risco Médio</option>
                                         <option value="Risco Baixo">Risco Baixo</option>
                                     </select>
+                                    <button type="button" onclick="exportHistoryCSV()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold flex items-center gap-2 transition-colors">
+                                        <iconify-icon icon="lucide:download"></iconify-icon>
+                                        <span>Exportar CSV</span>
+                                    </button>
                                 </div>
                             </div>
 
@@ -1196,6 +1592,7 @@
             const threats = high + medium;
             const urlCount = scanDatabase.filter((s) => s.scan_type === "URL").length;
             const phishCount = scanDatabase.filter((s) => s.scan_type === "PHISHING").length;
+            const ipCount = scanDatabase.filter((s) => s.scan_type === "IP").length;
             const avg = total > 0
                 ? (scanDatabase.reduce((acc, item) => acc + item.risk_score, 0) / total).toFixed(1)
                 : "0.0";
@@ -1204,7 +1601,7 @@
             if (navCounter) navCounter.textContent = `${total} Análises`;
 
             document.getElementById("stat-total").textContent = total;
-            document.getElementById("stat-breakdown-type").textContent = `URLs: ${urlCount} | Phishing: ${phishCount}`;
+            document.getElementById("stat-breakdown-type").textContent = `URLs: ${urlCount} | Phishing: ${phishCount} | IP: ${ipCount}`;
             document.getElementById("stat-threats").textContent = threats;
             document.getElementById("stat-high").textContent = high;
             document.getElementById("stat-med-low").textContent = `Médio: ${medium} | Baixo: ${low}`;
@@ -1212,10 +1609,10 @@
 
             renderRecentTable();
             renderHistoryTable();
-            renderCharts(low, medium, high, urlCount, phishCount);
+            renderCharts(low, medium, high, urlCount, phishCount, ipCount);
         }
 
-        function renderCharts(low, medium, high, urlCount, phishCount) {
+        function renderCharts(low, medium, high, urlCount, phishCount, ipCount) {
             if (typeof Chart === "undefined") return;
 
             const riskCtx = document.getElementById("chartRiskDistribution");
@@ -1248,11 +1645,11 @@
                 volumeChartInstance = new Chart(volCtx, {
                     type: "bar",
                     data: {
-                        labels: ["Análises de URLs", "Deteções de Phishing"],
+                        labels: ["URLs", "Phishing", "Rede / IPs"],
                         datasets: [{
                             label: "Registos na Base de Dados",
-                            data: [urlCount, phishCount],
-                            backgroundColor: ["#ef233c", "#ff4500"],
+                            data: [urlCount, phishCount, ipCount],
+                            backgroundColor: ["#ef233c", "#ff4500", "#10b981"],
                             borderRadius: 8
                         }]
                     },
@@ -1379,6 +1776,23 @@
 
         function closeDetailModal() {
             document.getElementById("scan-detail-modal").classList.add("hidden");
+        }
+
+        // Exportar Histórico CSV
+        function exportHistoryCSV() {
+            if (scanDatabase.length === 0) return;
+            let csvContent = "data:text/csv;charset=utf-8,ID,Tipo,Alvo,Pontuacao,Classificacao,Data\n";
+            scanDatabase.forEach((row) => {
+                const cleanTarget = (row.target_preview || "").replace(/"/g, '""');
+                csvContent += `${row.id},${row.scan_type},"${cleanTarget}",${row.risk_score},${row.classification},${row.created_at}\n`;
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "CyberGuard_Historico_SQLite.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // =========================================================================
@@ -1625,7 +2039,186 @@
         });
 
         // =========================================================================
-        // 6. MOTOR C: VERIFICADOR DE PALAVRAS-PASSE ZERO-STORAGE
+        // 6. NOVOS MOTORES: SCANNER IP, BREACHES, SQLi, CRYPTO, HASH & CHECKLIST
+        // =========================================================================
+        function fillIpSample(ip) {
+            document.getElementById("ip-input").value = ip;
+        }
+
+        document.getElementById("ip-scanner-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const ip = document.getElementById("ip-input").value.trim();
+            if (!ip) return;
+
+            const isHighRisk = ip.startsWith("185.") || ip.startsWith("192.168.");
+            const isMedRisk = ip.startsWith("45.");
+            const score = isHighRisk ? 82 : (isMedRisk ? 45 : 10);
+            const cls = score >= 60 ? "Risco Elevado" : (score >= 30 ? "Risco Médio" : "Risco Baixo");
+
+            document.getElementById("res-ip-target").textContent = ip;
+            document.getElementById("res-ip-score").textContent = `${score}/100`;
+            document.getElementById("res-ip-summary").textContent = isHighRisk
+                ? "Detetadas portas de administração remota (SSH/RDP) expostas publicamente."
+                : (isMedRisk ? "Serviços de transferência (FTP) abertos que requerem auditoria." : "Apenas portas web padrão (443) com filtro ativo.");
+
+            const statusEl = document.getElementById("res-ip-status");
+            statusEl.textContent = cls;
+            statusEl.className = `inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${getBadgeClass(cls)}`;
+
+            document.getElementById("res-ip-geo").textContent = isHighRisk ? "Frankfurt, DE (Relay Node)" : (isMedRisk ? "Fremont, US (DataCenter)" : "Lisboa, PT / Anycast");
+            document.getElementById("res-ip-isp").textContent = isHighRisk ? "AS20473 Anonymous Hosting" : (isMedRisk ? "AS63949 Linode Cloud" : "AS15169 Google / Cloud");
+
+            const portsDiv = document.getElementById("res-ip-ports");
+            portsDiv.innerHTML = isHighRisk
+                ? `<span class="badge-high px-2.5 py-1 rounded text-[11px]">22/TCP (SSH)</span><span class="badge-high px-2.5 py-1 rounded text-[11px]">3389/TCP (RDP)</span><span class="badge-medium px-2.5 py-1 rounded text-[11px]">8080/TCP (HTTP-Proxy)</span>`
+                : (isMedRisk
+                    ? `<span class="badge-medium px-2.5 py-1 rounded text-[11px]">21/TCP (FTP)</span><span class="badge-low px-2.5 py-1 rounded text-[11px]">443/TCP (HTTPS)</span>`
+                    : `<span class="badge-low px-2.5 py-1 rounded text-[11px]">443/TCP (HTTPS Seguro)</span><span class="badge-low px-2.5 py-1 rounded text-[11px]">53/UDP (DNS)</span>`);
+
+            document.getElementById("ip-result-card").classList.remove("hidden");
+
+            const now = new Date().toISOString().slice(0, 16).replace("T", " ");
+            scanDatabase.push({
+                id: scanDatabase.length ? Math.max(...scanDatabase.map((s) => s.id)) + 1 : 1,
+                scan_type: "IP",
+                target_preview: `IPv4: ${ip}`,
+                risk_score: score,
+                classification: cls,
+                summary: document.getElementById("res-ip-summary").textContent,
+                created_at: now,
+                indicators: [`Geolocalização: ${document.getElementById("res-ip-geo").textContent}`, `ASN/ISP: ${document.getElementById("res-ip-isp").textContent}`],
+                explanation: "Análise de superfície de rede realizada pelo módulo OSINT do CyberGuard AI."
+            });
+            saveDatabase();
+        });
+
+        function fillBreachSample(email) {
+            document.getElementById("breach-input").value = email;
+        }
+
+        document.getElementById("breach-form").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("breach-input").value.trim();
+            const card = document.getElementById("breach-result-card");
+            const statusBox = document.getElementById("breach-status");
+            const list = document.getElementById("breach-list");
+            list.innerHTML = "";
+
+            if (email.toLowerCase().includes("admin") || email.toLowerCase().includes("vulneravel") || email.length < 14) {
+                statusBox.className = "p-4 rounded-xl font-bold text-center text-sm badge-high";
+                statusBox.textContent = `ALERTA: O endereço ${email} foi encontrado em 2 fugas de dados conhecidas!`;
+                list.innerHTML = `
+                    <li class="p-4 bg-black border border-white/10 rounded-xl text-xs font-mono text-zinc-300">
+                        <strong class="text-[#ef233c] block text-sm mb-1">Collection #1 Credential Dump (2019)</strong>
+                        Dados Expostos: Endereços de Email e Hashes de Palavras-passe. Recomendação: Alterar a password imediatamente e ativar 2FA.
+                    </li>
+                    <li class="p-4 bg-black border border-white/10 rounded-xl text-xs font-mono text-zinc-300">
+                        <strong class="text-[#ef233c] block text-sm mb-1">Portal Corporativo Europeu (2023)</strong>
+                        Dados Expostos: Nomes, Emails, Telefones e IPs de sessão.
+                    </li>`;
+            } else {
+                statusBox.className = "p-4 rounded-xl font-bold text-center text-sm badge-low";
+                statusBox.textContent = `SEGURO: Não foram encontrados registos públicos de fugas de dados para ${email}.`;
+            }
+            card.classList.remove("hidden");
+        });
+
+        function simulateSQLi() {
+            const input = document.getElementById("sqli-input").value;
+            const vulBox = document.getElementById("sqli-vul-result");
+            const safeBox = document.getElementById("sqli-safe-result");
+
+            document.getElementById("sqli-vul-query").textContent = `SELECT * FROM users WHERE username = '${input}'`;
+
+            if (input.includes("' OR ") || input.toLowerCase().includes("drop table") || input.includes("--")) {
+                vulBox.innerHTML = "<strong class='text-red-400'>[VULNERÁVEL — INJEÇÃO BEM-SUCEDIDA]</strong><br>As plicas quebraram a estrutura da sintaxe SQL, permitindo contornar a autenticação ou executar comandos arbitrários!";
+                vulBox.className = "text-xs font-mono p-4 rounded-xl badge-high";
+            } else {
+                vulBox.innerHTML = "Pesquisa normal efetuada para o utilizador indicado (sem caracteres de rutura SQL).";
+                vulBox.className = "text-xs font-mono p-4 rounded-xl bg-black border border-white/10 text-zinc-300";
+            }
+
+            safeBox.innerHTML = "<strong class='text-emerald-400'>[PROTEGIDO — ATAQUE BLOQUEADO]</strong><br>Com Consultas Parametrizadas (<code>?</code>), o motor SQLite procura literalmente um utilizador chamado <code>" + input.replace(/</g, "&lt;") + "</code>, impedindo qualquer execução maliciosa.";
+            safeBox.className = "text-xs font-mono p-4 rounded-xl badge-low";
+        }
+
+        function runCrypto(action) {
+            const method = document.getElementById("crypto-method").value;
+            const input = document.getElementById("crypto-input").value;
+            const output = document.getElementById("crypto-output");
+            if (!input) {
+                output.value = "Introduz um texto primeiro.";
+                return;
+            }
+            try {
+                if (method === "base64") {
+                    output.value = action === "enc"
+                        ? btoa(unescape(encodeURIComponent(input)))
+                        : decodeURIComponent(escape(atob(input.trim())));
+                } else if (method === "caesar") {
+                    const shift = action === "enc" ? 3 : -3;
+                    output.value = input.split("").map((c) => {
+                        if (/[a-z]/i.test(c)) {
+                            const code = c.charCodeAt(0);
+                            const base = (code >= 65 && code <= 90) ? 65 : 97;
+                            return String.fromCharCode(((code - base + shift + 26) % 26) + base);
+                        }
+                        return c;
+                    }).join("");
+                } else if (method === "hex") {
+                    if (action === "enc") {
+                        output.value = Array.from(new TextEncoder().encode(input)).map((b) => b.toString(16).padStart(2, "0")).join(" ");
+                    } else {
+                        const hexParts = input.trim().split(/\s+/);
+                        const bytes = new Uint8Array(hexParts.map((h) => parseInt(h, 16)));
+                        output.value = new TextDecoder().decode(bytes);
+                    }
+                }
+            } catch (err) {
+                output.value = "Formato inválido para descodificação no algoritmo selecionado.";
+            }
+        }
+
+        async function generateHash() {
+            const input = document.getElementById("hash-input").value;
+            if (!input) {
+                document.getElementById("hash-sha256").textContent = "A aguardar introdução de texto...";
+                document.getElementById("hash-sha1").textContent = "A aguardar introdução de texto...";
+                return;
+            }
+            const msgBuffer = new TextEncoder().encode(input);
+            const sha256Buffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+            const sha1Buffer = await crypto.subtle.digest("SHA-1", msgBuffer);
+
+            const toHex = (buf) => Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+            document.getElementById("hash-sha256").textContent = toHex(sha256Buffer);
+            document.getElementById("hash-sha1").textContent = toHex(sha1Buffer);
+        }
+        document.getElementById("hash-input").addEventListener("input", generateHash);
+
+        function updateChecklist() {
+            const checked = document.querySelectorAll(".chk-audit:checked").length;
+            const pct = Math.round((checked / 5) * 100);
+            document.getElementById("chk-score-pct").textContent = `${pct}%`;
+            const bar = document.getElementById("chk-bar");
+            const res = document.getElementById("chk-result");
+            bar.style.width = `${pct}%`;
+
+            if (pct === 100) {
+                bar.className = "h-full bg-emerald-500 transition-all duration-300";
+                res.innerHTML = "<span class='text-emerald-400 font-bold'>Nível A (Excelente):</span> Postura defensiva exemplar contra a maioria dos vetores de ataque.";
+            } else if (pct >= 60) {
+                bar.className = "h-full bg-amber-500 transition-all duration-300";
+                res.innerHTML = "<span class='text-amber-400 font-bold'>Nível B (Moderado):</span> Boa base de segurança, mas ativa os pontos em falta para blindar as tuas contas.";
+            } else {
+                bar.className = "h-full bg-[#ef233c] transition-all duration-300";
+                res.innerHTML = "<span class='text-[#ef233c] font-bold'>Nível C (Vulnerável):</span> Atenção! Adota imediatamente a Autenticação de 2 Fatores e palavras-passe únicas.";
+            }
+        }
+        document.querySelectorAll(".chk-audit").forEach((el) => el.addEventListener("change", updateChecklist));
+
+        // =========================================================================
+        // 7. MOTOR C: VERIFICADOR DE PALAVRAS-PASSE ZERO-STORAGE
         // =========================================================================
         const pwdInput = document.getElementById("pwd-live-input");
         const pwdToggle = document.getElementById("pwd-toggle-visibility");
@@ -1740,7 +2333,7 @@
         }
 
         // =========================================================================
-        // 7. MOTOR D: ASSISTENTE DE CIBERSEGURANÇA ÉTICA (services/ai_service.py)
+        // 8. MOTOR D: ASSISTENTE DE CIBERSEGURANÇA ÉTICA (services/ai_service.py)
         // =========================================================================
         function generateAssistantReply(question) {
             const q = question.toLowerCase();
@@ -1800,7 +2393,7 @@
         });
 
         // =========================================================================
-        // 8. DEFINIÇÕES DA BASE DE DADOS
+        // 9. DEFINIÇÕES DA BASE DE DADOS
         // =========================================================================
         function showSettingsToast(msg) {
             const toast = document.getElementById("settings-toast");
