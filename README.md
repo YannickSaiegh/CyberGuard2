@@ -1,70 +1,98 @@
-CyberGuard AI — Plataforma SOC, OSINT & Cibersegurança
+🌟 Overview
 
-CyberGuard AI é uma plataforma avançada de cibersegurança e operações de SOC (Security Operations Center), desenvolvida como Projeto Técnico de Desenvolvimento de Software (TDS). A aplicação integra um ecossistema completo de ferramentas de análise forense, inteligência de ameaças (Threat Intel), auditoria de vulnerabilidades e testes defensivos.
+CyberGuard AI is a state-of-the-art web application engineered to simulate enterprise-grade security operations. It combines static file malware analysis, hexadecimal packet inspection, SIEM log hunting, MITRE ATT&CK mapping, and OSINT reconnaissance into a single, high-performance, responsive interface with a sleek Red Noir aesthetic.
 
-🚀 Principais Módulos & Ferramentas (v2.4.1)
+🚀 Key Modules & Features (26 Technical Tools)
 
-Malware Sandbox & Multi-Engine (filescan): Inspeção estática de ficheiros, cálculo de Hash SHA-256 (via Web Crypto API), leitura de Magic Bytes hexadecimais, deteção de dupla extensão (.pdf.exe) e simulação de 64 motores antivírus.
+🦠 Malware Analysis & Reverse Engineering
 
-Desofuscador de Malware & Extrator de IOCs (deobfuscator): Descodifica payloads PowerShell -enc, Base64, Hexadecimal e String.fromCharCode, extraindo automaticamente IPs C2, URLs e comandos suspeitos.
+Drag & Drop Malware Sandbox (filescan): Calculates SHA-256 hashes (via Web Crypto API), inspects binary Magic Bytes (e.g., 4D 5A MZ headers), detects double extensions (.pdf.exe), and simulates 64 multi-engine antivirus checks.
 
-Analisador de Cabeçalhos de Email & Anti-Spoofing (email-headers): Verifica o alinhamento entre From e Return-Path, deteta Display Name Spoofing e audita políticas SPF, DKIM e DMARC.
+Malware Payload Deobfuscator (deobfuscator): Decodes obfuscated PowerShell (-EncodedCommand), Base64, Hexadecimal, and String.fromCharCode scripts, automatically extracting C2 IP addresses, domains, and malicious commands.
 
-Analisador Heurístico de URLs (scanner): Inspeção passiva de protocolos HTTPS/HTTP, endereços IPv4 diretos, ofuscação com @ e TLDs de risco (.xyz, .top).
+YARA Rule Builder (yara): Generates formal YARA hunting signatures with custom hex patterns and suspicious API call strings for EDR deployment.
 
-Detetor de Phishing com IA Gemini (phishing): Analisa mensagens SMS, WhatsApp e emails em busca de gatilhos de engenharia social e pânico artificial.
+🔍 OSINT & Reconnaissance
 
-Inspetor de QR Codes / Anti-Quishing (quishing): Descodifica payloads maliciosos em códigos QR e identifica redes Wi-Fi Rogue (Evil Twin).
+Heuristic URL Analyzer (scanner): Passively inspects HTTPS/HTTP protocols, direct IPv4 hosts, @ symbol obfuscation, and high-risk TLDs (.xyz, .top).
 
-SIEM & Gerador de Regras Sigma (siem-sigma): Caça a ameaças em logs Linux/Web através de expressões regulares e exporta regras Sigma (.yml).
+QR Code Quishing Inspector (quishing): Decodes hidden payloads inside QR codes to detect malicious phishing redirects or rogue Wi-Fi (Evil Twin) configurations.
 
-Matriz Tática MITRE ATT&CK® (mitre-matrix): Mapeamento de TTPs adversárias (Initial Access, Execution, Credential Dumping, Exfiltration), queries EDR e mitigações SOC.
+Network & Port Recon (ipscanner): Simulates geolocation, ISP identification, and open port checks (SSH, RDP).
 
-Auditor SSL/TLS & Cipher Suites (ssl-inspector): Avalia certificados X.509, suporte a TLS 1.3 e Perfect Forward Secrecy.
+DNS, WHOIS & Subdomain Mapping (osint-dns): Audits SPF/DMARC alignment, SSL certificates, and DNS records.
 
-Calculadora de Sub-redes CIDR (cidr-calc): Cálculo bitwise IPv4, máscara de sub-rede, broadcast e segmentação de VLANs.
+Sherlock Username Tracker (osint-user): Searches digital footprints across 8 major public social networks and developer platforms.
 
-Scanner de IP & Portas (ipscanner): Geolocalização, ISP e portas expostas (SSH, RDP).
+Google Dorks GHDB Generator (dorks): Generates advanced search operators (site: target.pt ext:env) to audit public exposure of configuration files and database backups.
 
-Reconhecimento DNS, WHOIS & Subdomínios (osint-dns): Mapeamento SPF/DMARC e registos de domínios.
+EXIF Metadata Inspector & Scrubber (exif): Extracts and strips sensitive GPS coordinates and device model metadata from images for privacy protection.
 
-Rastreador de Username - Sherlock OSINT (osint-user): Pesquisa de pegada digital em 8 redes sociais e plataformas públicas.
+Dark Web Leak Checker (breach): Scans email addresses against simulated breach databases.
 
-Gerador de Google Dorks - GHDB (dorks): Operadores de pesquisa avançada para auditar exposição de ficheiros .env, .sql e diretórios expostos.
+🛡️ SOC, SIEM & Threat Intelligence
 
-Inspetor & Limpador de Metadados EXIF (exif): Extração e remoção de coordenadas GPS e dados de câmara em imagens.
+Email Forensics & Anti-Spoofing (email-headers): Detects Display Name Spoofing, header mismatches between From and Return-Path, and SPF/DKIM/DMARC failures.
 
-Verificador de Fugas de Dados Dark Web (breach): Pesquisa de credenciais comprometidas em bases de dados de violação.
+SIEM Log Hunter & Sigma Rule Builder (siem-sigma): Tests Regular Expressions against Linux authentication logs and web server access logs to generate exportable Sigma (.yml) detection rules.
 
-Calculadora CVSS v3.1 (cvss): Classificação oficial (0.0 a 10.0) de vulnerabilidades baseada na Tríade CIA.
+MITRE ATT&CK® Tactical Mapper (mitre-matrix): Interactive adversary TTP matrix providing EDR queries and Blue Team mitigations for techniques like Initial Access (T1566) and Credential Dumping (T1003).
 
-Inspetor OWASP Security Headers & JWT (headers, jwt): Auditoria de cabeçalhos HSTS/CSP e descodificação de tokens JWT (incluindo deteção da vulnerabilidade alg: none).
+SSL/TLS & Cipher Suite Auditor (ssl-inspector): Evaluates X.509 certificate validity, TLS 1.3 support, and Perfect Forward Secrecy.
 
-Gerador de Regras de Firewall UFW / Nginx (firewall): Bloqueio de IPs atacantes e hardening de servidores web.
+IPv4 CIDR Subnet Calculator (cidr-calc): Bitwise subnetting, wildcard masks, broadcast addresses, and VLAN host capacity calculations.
 
-Sandboxes de Injeção SQL & XSS (sqli, xss): Demonstração prática de vulnerabilidades OWASP Top 10 e respetiva mitigação (consultas parametrizadas e sanitização DOM).
+Packet Hex Dump Inspector (pcap): Low-level packet analyzer showing offsets, hexadecimal payloads, and ASCII translations for cleartext HTTP credentials or DNS tunneling.
 
-🔐 Controlo de Acessos & Segurança
+CVSS v3.1 Severity Calculator (cvss): Computes official vulnerability scores (0.0 to 10.0) based on attack vectors and the CIA triad.
 
-Autenticação SQLite Direta (SHA-256): Sem necessidade de 2FA por email. Registo e início de sessão imediatos.
+OWASP Security Headers & JWT Auditor (headers, jwt): Audits HSTS/CSP headers and decodes JSON Web Tokens (including alg: none vulnerability detection).
 
-Filtro Multilíngue de Linguagem Imprópria: O sistema valida automaticamente nomes de utilizador e emails contra uma lista negra exaustiva de termos ofensivos em várias línguas (PT, EN, ES, FR, DE, IT), rejeitando inputs inválidos.
+Firewall Rule Generator (firewall): Generates ufw/iptables and Nginx/Apache configuration rules to block malicious IPs and protect sensitive endpoints (.env, .git).
 
-Controlo de Acesso Baseado em Funções (RBAC):
+🔐 Cryptography, Training & Management
 
-Contas de Administrador (como admin@cyberguard.pt, com a palavra-passe nigga333larp) têm acesso total ao painel SQLite de utilizadores, Live Threat Feed e módulos avançados de engenharia/OSINT.
+SQL Injection & XSS Sandboxes (sqli, xss): Demonstrates OWASP Top 10 vulnerabilities and compares vulnerable string concatenation with parameterized queries and DOM sanitization.
 
-Contas de Utilizador Padrão têm acesso às ferramentas de análise e proteção pessoal.
+Password Entropy & Security Checker (password): Zero-storage entropy calculations and secure password generator.
 
-🛠️ Como Executar o Projeto
+Cryptography Lab (crypto): Base64, Caesar Cipher, and Hex encoders/decoders.
 
-Certifica-te de que tens um browser moderno (Chrome, Firefox, Edge, Safari) com suporte a HTML5, Tailwind CSS e Web Crypto API.
+SQLite Scan History & CSV Export (history): Complete searchable audit log with CSV export capabilities.
 
-Faz o download ou clona o repositório contendo o ficheiro único index.html.
+Gemini AI Security Assistant (assistant): Context-aware defensive AI helper.
 
-Abre o ficheiro index.html diretamente no teu browser ou serve-o através de um servidor web local (por exemplo, usando Python):
+Verified Feedback & Bug Reporting (feedback): Secure ticketing system tied directly to user sessions, routed to cyberguard@proton.me.
+
+🔐 Authentication & RBAC (Role-Based Access Control)
+
+Direct SQLite Authentication (SHA-256): Fast native login and account creation without email OTP overhead.
+
+Multilingual Profanity Filter: Built-in blacklisting filter that screens usernames and emails against offensive terminology across multiple languages (PT, EN, ES, FR, DE, IT) to prevent improper inputs.
+
+Privilege Levels:
+
+Administrator Accounts: Full access to the SQLite users table, Live Threat Feed, and advanced engineering/OSINT modules. (Default Admin: admin@cyberguard.pt | Password: nigga333larp)
+
+Standard Users: Access to core analysis tools and personal security features.
+
+🚀 Quick Start & Installation
+
+Clone the repository:
+
+git clone https://github.com/your-username/cyberguard-ai.git
+cd cyberguard-ai
+
+
+Run locally:
+The project is built as a robust single-file architecture (index.html) utilizing CDN-delivered dependencies (Tailwind CSS, Chart.js, Iconify). You can open it directly in any modern web browser or serve it via a local HTTP server:
 
 python3 -m http.server 8080
 
 
-Acede a http://localhost:8080 para utilizar a plataforma.
+Access the platform:
+Open your browser at http://localhost:8080.
+
+🛡️ License
+
+Distributed under the MIT License. See LICENSE for more information.
